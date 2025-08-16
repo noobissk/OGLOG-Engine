@@ -1,0 +1,10 @@
+^C:\USERS\MISOH\DOCUMENTS\PROJECTS\SCHOOL\MATURITA\OGLOG-ENGINE\OGLOG\BUILD\CMAKEFILES\2375123BE02DC90718EEAFE7F72D6D12\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/misoh/Documents/Projects/School/Maturita/OGLOG-Engine/OGLOG -BC:/Users/misoh/Documents/Projects/School/Maturita/OGLOG-Engine/OGLOG/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/misoh/Documents/Projects/School/Maturita/OGLOG-Engine/OGLOG/build/oglog_engine.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
