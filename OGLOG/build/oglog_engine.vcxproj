@@ -326,6 +326,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\misoh\Documents\Projects\School\Maturita\OGLOG-Engine\OGLOG\src\material.cpp" />
     <ClCompile Include="C:\Users\misoh\Documents\Projects\School\Maturita\OGLOG-Engine\OGLOG\src\scripts\shader_modules.cpp" />
     <ClCompile Include="C:\Users\misoh\Documents\Projects\School\Maturita\OGLOG-Engine\OGLOG\src\scripts\triangle_mesh.cpp" />
+    <ClCompile Include="C:\Users\misoh\Documents\Projects\School\Maturita\OGLOG-Engine\OGLOG\src\scripts\linear_algebra.cpp" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -16,6 +16,7 @@ add_executable(oglog_engine
     src/material.cpp
     src/scripts/shader_modules.cpp
     src/scripts/triangle_mesh.cpp
+    src/scripts/linear_algebra.cpp
 )
 
 target_include_directories(oglog_engine PRIVATE dependencies)

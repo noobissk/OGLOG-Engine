@@ -1,6 +1,7 @@
 #include "config.h"
 #include "scripts/shader_modules.h"
 #include "scripts/triangle_mesh.h"
+#include "scripts/linear_algebra.h"
 #include "material.h"
 
 GLFWwindow* window;
@@ -34,12 +35,17 @@ int main ()
     Material* material = new Material("../../src/textures/image.png");
     Material* mask = new Material("../../src/textures/mask.png");
 
-
+    
     // set texture units
     glUseProgram(shader);
     glUniform1i(glGetUniformLocation(shader, "material"), 0);
     glUniform1i(glGetUniformLocation(shader, "mask"), 1);
-
+    
+    vec3 quad_position = {0.0f, -0.5f, 0.0f};
+    mat4 model = create_matrix_transformation(quad_position);
+    unsigned int model_location = glGetUniformLocation(shader, "model");
+    glUniformMatrix4fv(model_location, 1, GL_FALSE, model.entries);
+    
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 

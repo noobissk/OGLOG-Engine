@@ -19,6 +19,9 @@
     <ClCompile Include="C:\Users\misoh\Documents\Projects\School\Maturita\OGLOG-Engine\OGLOG\src\scripts\triangle_mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\misoh\Documents\Projects\School\Maturita\OGLOG-Engine\OGLOG\src\scripts\linear_algebra.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\misoh\Documents\Projects\School\Maturita\OGLOG-Engine\OGLOG\CMakeLists.txt" />
