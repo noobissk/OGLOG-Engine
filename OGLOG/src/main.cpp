@@ -41,20 +41,31 @@ int main ()
     glUniform1i(glGetUniformLocation(shader, "material"), 0);
     glUniform1i(glGetUniformLocation(shader, "mask"), 1);
     
-    vec3 quad_position = {0.0f, -0.5f, 0.0f};
-    mat4 model = create_matrix_transformation(quad_position);
+    vec3 quad_position = {0.0f, 0.0f, 0.0f};
+    mat4 model = create_matrix_transform(quad_position);
     unsigned int model_location = glGetUniformLocation(shader, "model");
-    glUniformMatrix4fv(model_location, 1, GL_FALSE, model.entries);
+    unsigned int view_location = glGetUniformLocation(shader, "view");
+    
     
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+    
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
+        
+        mat4 model = create_model_transform( {0.0f, 0.0f, 0.0f}, 0);
+        glUniformMatrix4fv(model_location, 1, GL_FALSE, model.entries);
+
+
+        vec3 camera_pos = {cosf(glfwGetTime()) * 0.7f, sinf(glfwGetTime()) * 0.7f, 1.0f};
+        vec3 camera_target = {0.0f, 0.0f, 0.0f};
+        mat4 view = create_look_at(camera_pos, camera_target);
+        glUniformMatrix4fv(view_location, 1, GL_FALSE, view.entries);
 
         glClear(GL_COLOR_BUFFER_BIT);
         glUseProgram(shader);
+
         material->use(0);
         mask->use(1);
 
