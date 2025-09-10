@@ -18,12 +18,12 @@ set( _glfw3_HEADER_SEARCH_DIRS
 "/usr/include"
 "/usr/local/include"
 "${CMAKE_SOURCE_DIR}/includes"
-"D:/DO NOT TOUCH (Halagacka)/glfw/include" )
+"C:/Program files (x86)/glfw/include" )
 set( _glfw3_LIB_SEARCH_DIRS
 "/usr/lib"
 "/usr/local/lib"
 "${CMAKE_SOURCE_DIR}/lib"
-"D:/DO NOT TOUCH (Halagacka)/glfw/lib-vc2022" )
+"C:/Program files (x86)/glfw/lib-vc2022" )
 
 # Check environment for root search directory
 set( _glfw3_ENV_ROOT $ENV{GLFW3_ROOT} )

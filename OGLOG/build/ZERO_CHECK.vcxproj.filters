@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="C:\Users\Michal.Halagacka\Documents\GitHub\OGLOG-Engine\OGLOG\build\CMakeFiles\c7c93c368ff90506953b1de2316ff660\generate.stamp.rule">
+    <CustomBuild Include="C:\Users\misoh\Documents\Projects\School\Maturita\OGLOG-Engine\OGLOG\build\CMakeFiles\2375123be02dc90718eeafe7f72d6d12\generate.stamp.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{5970E7AE-0FCA-3E48-AA91-19ECE8618011}</UniqueIdentifier>
+      <UniqueIdentifier>{25DF42C1-F09E-33CC-A53B-CF9FFFAE4EB3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

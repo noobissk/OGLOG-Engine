@@ -1,13 +1,16 @@
 #include "config.h"
 #include "scripts/shader_modules.h"
 #include "scripts/triangle_mesh.h"
-#include "scripts/linear_algebra.h"
 #include "material.h"
 
 GLFWwindow* window;
 static const std::string shaderPath = "../../src/shaders/";
 
 static int width = 640, height = 400;
+
+static glm::vec3 up = {0, 1, 0};
+static glm::vec3 right = {1, 0, 0};
+static glm::vec3 forward = {0, 0, 1};
 
 int main ()
 {
@@ -43,14 +46,14 @@ int main ()
     glUniform1i(glGetUniformLocation(shader, "material"), 0);
     glUniform1i(glGetUniformLocation(shader, "mask"), 1);
     
-    vec3 quad_position = {0.0f, 0.0f, 0.0f};
-    mat4 model = create_matrix_transform(quad_position);
     unsigned int model_location = glGetUniformLocation(shader, "model");
     unsigned int view_location = glGetUniformLocation(shader, "view");
     unsigned int projection_location = glGetUniformLocation(shader, "projection");
+
+    glm::vec3 quad_position = { 0.0f, 0.0f, 0.0f };
     
-    mat4 projection = create_perspective_projection(90.0f, ((float)width)/((float)height), 0.1f, 10.0f);
-    glUniformMatrix4fv(view_location, 1, GL_FALSE, projection.entries);
+    glm::mat4 projection = glm::perspective(90.0f, ((float)width)/((float)height), 0.1f, 10.0f);
+    glUniformMatrix4fv(projection_location, 1, GL_FALSE, glm::value_ptr(projection));
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -59,14 +62,17 @@ int main ()
     {
         glfwPollEvents();
         
-        mat4 model = create_model_transform( {0.0f, 0.0f, 0.0f}, 0);
-        glUniformMatrix4fv(model_location, 1, GL_FALSE, model.entries);
+
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, quad_position);
+        model = glm::rotate(model, (float)0.0f, { 0.0f, 0.0f, 1.0f }); // in math, translate & rotate should be swapped, idk why glm has them in opposite order
+        glUniformMatrix4fv(model_location, 1, GL_FALSE, glm::value_ptr(model));
 
 
-        vec3 camera_pos = {cosf(glfwGetTime()) * 0.7f, sinf(glfwGetTime()) * 0.7f, 1.0f};
-        vec3 camera_target = {0.0f, 0.0f, 0.0f};
-        mat4 view = create_look_at(camera_pos, camera_target);
-        glUniformMatrix4fv(view_location, 1, GL_FALSE, view.entries);
+        glm::vec3 camera_pos = {cosf(glfwGetTime()) * 0.7f, sinf(glfwGetTime()) * 0.7f, 1.0f};
+        glm::vec3 camera_target = {0.0f, 0.0f, 0.0f};
+        glm::mat4 view = glm::lookAt(camera_pos, camera_target, up);
+        glUniformMatrix4fv(view_location, 1, GL_FALSE, glm::value_ptr(view));
 
         glClear(GL_COLOR_BUFFER_BIT);
         glUseProgram(shader);
