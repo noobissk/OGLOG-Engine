@@ -116,6 +116,28 @@ mat4 create_model_transform(vec3 position, float angle)
     return matrix;
 }
 
+mat4 create_perspective_projection(float fov, float aspect, float near, float far)
+{
+    fov = fov * PI / 360.0f;
+    float t = tanf(fov);
+    float n = -near;
+    float f = -far;
+
+    mat4 matrix;
+
+    for (int i = 1; i < 16; i++)
+    {
+        matrix.entries[i] = 0.0f;
+    }
+    matrix.entries[0]  = 1.0f / (aspect * t);
+    matrix.entries[5]  = 1.0f / t;
+    matrix.entries[10] = -(n + f) / (n - f);
+    matrix.entries[11] = -1.0f;
+    matrix.entries[14] = 2 * n * f / (n - f);
+
+    return matrix;
+}
+
 mat4 create_look_at(vec3 from, vec3 to)
 {
     vec3 global_up = {0.0f, 1.0f, 0.0f};

@@ -7,6 +7,8 @@
 GLFWwindow* window;
 static const std::string shaderPath = "../../src/shaders/";
 
+static int width = 640, height = 400;
+
 int main ()
 {
     if (!glfwInit())
@@ -14,7 +16,7 @@ int main ()
         return -1;
     }
 
-    window = glfwCreateWindow(640, 400, "OGLOG Engine project", NULL, NULL);
+    window = glfwCreateWindow(width, height, "OGLOG Engine project", NULL, NULL);
     glfwMakeContextCurrent(window);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -45,8 +47,11 @@ int main ()
     mat4 model = create_matrix_transform(quad_position);
     unsigned int model_location = glGetUniformLocation(shader, "model");
     unsigned int view_location = glGetUniformLocation(shader, "view");
+    unsigned int projection_location = glGetUniformLocation(shader, "projection");
     
-    
+    mat4 projection = create_perspective_projection(90.0f, ((float)width)/((float)height), 0.1f, 10.0f);
+    glUniformMatrix4fv(view_location, 1, GL_FALSE, projection.entries);
+
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
