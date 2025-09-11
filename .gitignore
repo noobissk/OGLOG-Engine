@@ -20,3 +20,4 @@ CMakeUserPresets.json
 OGLOG/build
 
 OGLOG/cmake/Findglfw3.cmake
+/OGLOG/build/
