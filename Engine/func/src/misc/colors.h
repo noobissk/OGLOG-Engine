@@ -6,7 +6,7 @@
 class Colors {
 public:
     // static const glm::vec3 program_default  = { 0.4f, 0.37f, 0.55f };
-    static const glm::vec3 programDefault;
+    static const glm::vec3 program_default;
 
     static const glm::vec3 red;
     static const glm::vec3 green;

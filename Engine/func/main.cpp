@@ -28,7 +28,7 @@ int main ()
         return -1;
     }
 
-    ScreenColor = Colors::programDefault;
+    ScreenColor = Colors::program_default;
     glClearColor(ScreenColor.r, ScreenColor.g, ScreenColor.b, 1.0f);
 
     while (!glfwWindowShouldClose(window))

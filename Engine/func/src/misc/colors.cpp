@@ -1,6 +1,6 @@
-#include "Colors.h"
+#include "colors.h"
 
-const glm::vec3 Colors::programDefault = glm::vec3(0.4f, 0.37f, 0.55f);
+const glm::vec3 Colors::program_default = glm::vec3(0.4f, 0.37f, 0.55f);
 const glm::vec3 Colors::red             = glm::vec3(1.0f, 0.0f, 0.0f);
 const glm::vec3 Colors::green           = glm::vec3(0.0f, 1.0f, 0.0f);
 const glm::vec3 Colors::blue            = glm::vec3(0.0f, 0.0f, 1.0f);
