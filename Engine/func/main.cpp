@@ -3,8 +3,8 @@
 #include <GLFW/glfw3.h>
 #include <string>
 #include <iostream>
-#include "engine.h"
-#include "src/misc/colors.h"
+#include <engine_values.h>
+#include <misc/colors.h>
 
 static const std::string shaderPath = "../../func/shaders/";
 

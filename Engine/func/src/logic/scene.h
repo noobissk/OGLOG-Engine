@@ -30,12 +30,15 @@ class Scene {
     struct IStorage { virtual ~IStorage() = default; virtual void removeIfPresent(Entity) = 0; };
     std::unordered_map<std::type_index, std::unique_ptr<IStorage>> storages;
 
+    uint16_t id;
 
 public:
     std::string name;
 
-    Scene(std::string name) {
-        this->name = name;
+    Scene(uint16_t id, std::string name) : id(id), name(name) { }
+
+    bool operator=(const Scene& other) {
+        return name == other.name;
     }
 
     Entity CreateEntity()
