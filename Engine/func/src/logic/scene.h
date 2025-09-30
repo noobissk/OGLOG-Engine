@@ -37,7 +37,7 @@ public:
 
     Scene(uint16_t id, std::string name) : id(id), name(name) { }
 
-    bool operator=(const Scene& other) {
+    bool operator==(const Scene& other) {
         return name == other.name;
     }
 
@@ -84,7 +84,7 @@ private:
         std::vector<Entity> entities; // dense Entity handles (same order as components)
         std::vector<uint32_t> sparse; // maps entity index -> dense index (or INVALID_POS) | works as dictionary
 
-        ensureSparseSize(uint32_t index) {
+        void ensureSparseSize(uint32_t index) {
             if (index >= sparse.size())
                 sparse.resize(index + 1, INVALID_POS);
         }
@@ -155,7 +155,24 @@ private:
         }
 
         size_t size() const { return components.size(); }
+
+        
     };
+
+    template<typename T>
+    ComponentStorage<T>& getOrCreateStorage() {
+        std::type_index key(typeid(T));
+        auto it = storages.find(key);
+        if (it == storages.end()) {
+            auto ptr = std::make_unique<ComponentStorage<T>>();
+            it = storages.emplace(
+                std::piecewise_construct,
+                std::forward_as_tuple(key),
+                std::forward_as_tuple(std::move(ptr))
+            ).first;
+        }
+        return *static_cast<ComponentStorage<T>*>(it->second.get());
+    }
 
 
 public:
