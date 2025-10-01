@@ -25,20 +25,23 @@ inline uint32_t EntityGen(Entity e)   { return uint32_t(e >> 32); }
 class Scene {
     std::vector<uint32_t> generations;  // per-index generation
     std::vector<uint32_t> free_list;    // free indices to reuse
-    
+
     // type-erased storage registry
     struct IStorage { virtual ~IStorage() = default; virtual void removeIfPresent(Entity) = 0; };
     std::unordered_map<std::type_index, std::unique_ptr<IStorage>> storages;
 
-    uint16_t id;
+    // uint16_t id;
 
 public:
     std::string name;
 
-    Scene(uint16_t id, std::string name) : id(id), name(name) { }
+    Scene(std::string name) : name(name) { }
 
     bool operator==(const Scene& other) {
         return name == other.name;
+    }
+    bool operator==(const std::string other) {
+        return name == other;
     }
 
     Entity CreateEntity()
@@ -64,7 +67,7 @@ public:
         for (auto &kv : storages)
             kv.second->removeIfPresent(e);
         
-            ++generations[idx];
+        ++generations[idx];
         free_list.push_back(idx);
     }
 

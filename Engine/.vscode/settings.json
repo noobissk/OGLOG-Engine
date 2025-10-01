@@ -64,6 +64,11 @@
         "xutility": "cpp",
         "string_view": "cpp",
         "algorithm": "cpp",
-        "typeindex": "cpp"
+        "typeindex": "cpp",
+        "cstdarg": "cpp",
+        "iomanip": "cpp",
+        "text_encoding": "cpp",
+        "map": "cpp",
+        "xtree": "cpp"
     }
 }
