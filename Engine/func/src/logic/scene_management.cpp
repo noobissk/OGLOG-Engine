@@ -31,11 +31,6 @@ void SceneManager::deleteScene(const Scene& scene) {
     all_scenes.erase(scene.name);
 }
 
-// Scene& SceneManager::getSceneById(uint16_t index) {
-//     return all_scenes[index];
-// }
-
-
 bool SceneManager::exists(const std::string& name) {
     return all_scenes.count(name) == 1;
 }
