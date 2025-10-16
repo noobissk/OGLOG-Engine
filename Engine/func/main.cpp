@@ -1,12 +1,10 @@
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include <engine.h>
 #include <string>
 #include <iostream>
-#include <engine_values.h>
-#include <misc/colors.h>
 
 static const std::string shaderPath = "../../func/shaders/";
+static std::condition_variable cv;
+std::mutex mtx;
 
 
 
@@ -18,7 +16,18 @@ int main ()
         return -1;
     }
 
+    // glfwWindowHint(GLFW_VERSION_MAJOR, 4);
+    // glfwWindowHint(GLFW_VERSION_MINOR, 6);
+    // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
     window = glfwCreateWindow(Resolution.x, Resolution.y, "OGLOG Engine project", NULL, NULL);
+
+    if (!window)
+    {
+        std::cerr << "Failed to create GLFW window" << std::endl;
+        glfwTerminate();
+        return -1;
+    }
     glfwMakeContextCurrent(window);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -28,19 +37,9 @@ int main ()
         return -1;
     }
 
-    ScreenColor = Colors::program_default;
-    glClearColor(ScreenColor.r, ScreenColor.g, ScreenColor.b, 1.0f);
+    Engine::startUp();
 
-    while (!glfwWindowShouldClose(window))
-    {
-        glfwPollEvents();
-
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        glfwSwapBuffers(window);
-    }
-
-    glfwTerminate();
+    Engine::waitUntilQuit();
 
     return 0;
 }

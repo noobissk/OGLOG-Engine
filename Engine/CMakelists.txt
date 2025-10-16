@@ -12,6 +12,9 @@ find_package(glfw3 REQUIRED)
 add_executable(oglog_engine
     func/main.cpp
     dependencies/glad/glad.c
+    func/src/engine.cpp
+    func/src/logic/system_manager.cpp
+    func/src/logic/scene_manager.cpp
     func/config.cpp
     func/src/misc/colors.cpp
 )

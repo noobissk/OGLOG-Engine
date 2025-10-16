@@ -5,27 +5,33 @@ private:
     bool is_enabled;
 
 public:
+    int id;
 
-    bool isEnabled() const { return is_enabled; }
+    virtual bool isEnabled() const { return is_enabled; }
 
     /// @brief run every frame
-    void update();
+    virtual void update();
+
+    /// @brief runs at fixed intervals set in engine_values.h
+    virtual void fixedUpdate();
 
     /// @brief runs when class is enabled, before the first update
-    void start();
+    virtual void start();
 
     /// @brief runs during project startup
-    void awake();
+    virtual void awake();
 
     /// @brief runs every time the system is enabled -- on Start the system is enabled by default (unless set up otherwise)
-    void onEnable();
-    
+    virtual void onEnable();
+
     /// @brief runs every time the system is disabled -- on Start the system is enabled by default (unless set up otherwise)
-    void onDisable();
+    virtual void onDisable();
 
     /// @brief enables this system to run update every frame
-    void enable();
+    virtual void enable();
 
     /// @brief disables this systems update to run every frame
-    void disable();
+    virtual void disable();
+
+    virtual ~System();
 };

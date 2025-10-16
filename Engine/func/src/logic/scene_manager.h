@@ -1,4 +1,7 @@
-#pragma once
+#ifndef SCENE_MANAGEMENT
+#define SCENE_MANAGEMENT
+
+
 #include <string>
 #include <vector>
 #include "logic/scene.h"
@@ -10,7 +13,7 @@ private:
     static std::map<std::string, Scene> all_scenes;
 
 public:
-    static Scene& active_scene;
+    static std::string active_scene;
 
     unsigned int scene_count = all_scenes.size();
 
@@ -27,3 +30,5 @@ public:
     static bool exists(const std::string& name);
     static bool exists(const Scene& scene);
 };
+
+#endif

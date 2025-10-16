@@ -1,23 +1,24 @@
 
 #pragma once
-#include <gml/vector.h>
-#include <gml/quaternion.h>
+#include <glm/vec3.hpp>
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 #include <vector>
 
 struct Transform {
-    gml::vec3 position;
-    gml::vec3 local_pos;
+    glm::vec3 position;
+    glm::vec3 local_pos;
 
-    gml::quat rotation;
-    gml::quat local_rotation;
+    glm::quat rotation;
+    glm::quat local_rotation;
 
-    Transform* parent;
+    Transform* parent = nullptr;
     std::vector<Transform*> children;
 
-    inline gml::vec3 euler_angles() {
-        return gml::to_euler(rotation);
+    inline glm::vec3 euler_angles() {
+        return glm::eulerAngles(rotation);
     }
-    inline gml::vec3 local_euler_angles() {
-        return gml::to_euler(local_rotation); 
+    inline glm::vec3 local_euler_angles() {
+        return glm::eulerAngles(local_rotation); 
     }
-}
+};
