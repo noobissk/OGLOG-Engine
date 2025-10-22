@@ -20,7 +20,7 @@ inline Entity makeEntity(uint32_t idx, uint32_t gen) {
 }
 
 inline uint32_t entityIndex(Entity e) { return uint32_t(e & 0xFFFFFFFFu); }
-inline uint32_t EntityGen(Entity e)   { return uint32_t(e >> 32); }
+inline uint32_t entityGen(Entity e)   { return uint32_t(e >> 32); }
 
 class Scene {
     std::vector<uint32_t> generations;  // per-index generation
@@ -44,7 +44,7 @@ public:
         return name == other;
     }
 
-    Entity CreateEntity()
+    Entity createEntity()
     {
         uint32_t idx;
         if (!free_list.empty()){
@@ -62,7 +62,7 @@ public:
         uint32_t idx = entityIndex(e);
         if (idx >= generations.size())
             return;
-        if (EntityGen(e) != generations[idx])
+        if (entityGen(e) != generations[idx])
             return; // stale handle
         for (auto &kv : storages)
             kv.second->removeIfPresent(e);
@@ -71,12 +71,10 @@ public:
         free_list.push_back(idx);
     }
 
-    bool IsAlive(Entity e)
-    {
+    bool isAlive(Entity e) const {
         uint32_t idx = entityIndex(e);
-        if (idx >= generations.size())
-            return false;
-        return EntityGen(e) == generations[idx];
+        if (idx >= generations.size()) return false;
+        return entityGen(e) == generations[idx];
     }
 
 private:
@@ -149,12 +147,12 @@ private:
             
         }
 
-        void removeIfPresent(Entity e) {
-            override { remove(e); }
-        }
+        void removeIfPresent(Entity e) override {
+                remove(e);
+            }
 
-        const std::vector<Entity>& DenseEntities() const {
-            return entities
+        const std::vector<Entity>& denseEntities() const {
+            return entities;
         }
 
         size_t size() const { return components.size(); }

@@ -1,4 +1,5 @@
-
+#pragma once
+#include <logic/components/components.h>
 
 class System {
 private:
@@ -33,5 +34,6 @@ public:
     /// @brief disables this systems update to run every frame
     virtual void disable();
 
+    System();
     virtual ~System();
 };

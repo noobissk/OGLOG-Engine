@@ -1,9 +1,14 @@
 #pragma once
+#include <logic/systems/system.h>
+#include <logic/scene_manager.h>
 #include <vector>
-#include <logic/system.h>
 
 class SystemManager {
 public:
+    static std::vector<System> systems;
+
+    static Scene* current_scene;
+
     // std::vector<System> systems;
 
     static void initialize();
@@ -12,7 +17,7 @@ public:
 
     static void start();
 
-    // static void update();
+    static void update();
 
     // static void fixedUpdate();
 

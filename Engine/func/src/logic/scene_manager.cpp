@@ -1,5 +1,6 @@
 #include "scene_manager.h"
 #include <stdexcept>
+#include <logic/system_manager.h>
 
 // In scene_manager.cpp
 std::map<std::string, Scene> SceneManager::all_scenes {};
@@ -9,28 +10,35 @@ std::map<std::string, Scene> SceneManager::all_scenes {};
 std::string SceneManager::active_scene;
 
 
+
+
 void SceneManager::loadScene(const std::string& name) {
-    Scene& s = getSceneByName(name);
+    auto it = all_scenes.find(name);
+    if (it == all_scenes.end()) throw std::runtime_error("Scene '" + name + "' not found");
     active_scene = name;
+    SystemManager::current_scene = &it->second;
 }
 
 void SceneManager::loadScene(const Scene& scene) {
-    active_scene = scene.name;
+    auto it = all_scenes.find(scene.name);
+    if (it == all_scenes.end()) throw std::runtime_error("Scene '" + scene.name + "' not found");
+    active_scene = it->first;
+    SystemManager::current_scene = &it->second;
 }
 
 
+
 void SceneManager::createScene(const std::string& name) {
-    if (all_scenes.empty())
-    {
-        all_scenes.emplace(name, Scene(name));
-        active_scene = name;
-    }
     if (exists(name)) {
-        std::string error_message = "Tried creating an Invalid scene. Scene with name: '" + name + "' already exists.";
-        throw std::runtime_error(error_message);
+        throw std::runtime_error("Tried creating an invalid scene. Scene with name: '" + name + "' already exists.");
     }
-    // all_scenes[name] = Scene(name);
-    all_scenes.emplace(name, Scene(name));
+    // construct in-place (no default ctor required)
+    auto [it, inserted] = all_scenes.try_emplace(name, name);
+    if (all_scenes.size() == 1) {
+        // first scene becomes active
+        active_scene = name;
+        SystemManager::current_scene = &it->second;
+    }
 }
 
 Scene& SceneManager::getSceneByName(const std::string& name)
@@ -40,6 +48,11 @@ Scene& SceneManager::getSceneByName(const std::string& name)
         throw std::runtime_error("Scene '" + name + "' not found");
     }
     return it->second;
+}
+
+Scene& SceneManager::getActiveScene() {
+    if (active_scene.empty()) throw std::runtime_error("No active scene set");
+    return getSceneByName(active_scene); // avoids operator[]
 }
 
 void SceneManager::deleteScene(const std::string& name) {

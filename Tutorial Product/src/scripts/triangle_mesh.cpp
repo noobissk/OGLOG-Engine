@@ -30,7 +30,6 @@ TriangleMesh::TriangleMesh()
     glGenBuffers(2, VBOs.data());
 
 
-    
     // position as set up in the shader
     // 24 indicating the number of bytes we need to read through to get to another attribute (6 floats(4 bytes) = 24)
     // (void*)0 explains to the gpu the offset where we should start reading the attrib

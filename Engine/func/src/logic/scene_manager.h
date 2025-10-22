@@ -21,6 +21,7 @@ public:
     static void loadScene(const Scene& scene);
 
     static Scene& getSceneByName(const std::string& name);
+    static Scene& getActiveScene();
 
     static void createScene(const std::string& name);
 

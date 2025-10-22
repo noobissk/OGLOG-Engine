@@ -1,4 +1,4 @@
-#include <logic/time.h>
+#include <util/time.h>
 #include <chrono>
 #include <cmath>
 
@@ -8,6 +8,9 @@ float Time::fixed_delta = 0.0f;
 float Time::smooth_delta = 0.0f;
 float Time::sine = 0.0f;
 float Time::cosine = 0.0f;
+float Time::time = 0.0f;
+float Time::m_time_old = 0.0f;
+float Time::m_smooth_delta_factor = 0.1f;
 
 
 using namespace std::chrono;
@@ -24,8 +27,8 @@ void Time::update()
 
     time += delta;
     smooth_delta += (delta - smooth_delta) * m_smooth_delta_factor;
-    sine = std::sinf(time);
-    cosine = std::cosf(time);
+    sine = std::sin(time);
+    cosine = std::cos(time);
 }
 
 void Time::updateFixed()

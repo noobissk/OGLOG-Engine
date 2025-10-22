@@ -1,14 +1,14 @@
 #include <engine.h>
+#include <logic/systems/systems.h>
 #include <logic/system_manager.h>
+#include <logic/scene_manager.h>
 #include <misc/colors.h>
 
-std::mutex Engine::m_mtx;
-std::condition_variable Engine::m_cv;
-bool Engine::m_isQuitTriggered = false;
-
+GLFWwindow* Engine::window = nullptr;
 
 int Engine::startUp()
 {
+    SceneManager::createScene("default");
     SystemManager::initialize();
 
     ScreenColor = Colors::program_default;
@@ -20,6 +20,8 @@ int Engine::startUp()
 
         glClear(GL_COLOR_BUFFER_BIT);
 
+        SystemManager::update();
+
         glfwSwapBuffers(window);
     }
 
@@ -30,14 +32,4 @@ int Engine::startUp()
     return 0;
 }
 
-
-void Engine::waitUntilQuit() {
-    std::unique_lock<std::mutex> lock(m_mtx);
-    m_cv.wait(lock, [] { return m_isQuitTriggered; });
-}
-
-void Engine::quit() {
-    std::lock_guard<std::mutex> lock(m_mtx);
-    m_isQuitTriggered = true;
-    m_cv.notify_all();
-}
+void Engine::quit() { }

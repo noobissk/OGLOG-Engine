@@ -1,10 +1,8 @@
-
-
 #pragma once
-#include <logic/system.h>
+#include "systems.h"
 
 
-class TextureSystem : public System
+class Texture_S : public System
 {
 public:
     void update() override;

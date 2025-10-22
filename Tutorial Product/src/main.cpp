@@ -4,7 +4,7 @@
 #include "material.h"
 
 GLFWwindow* window;
-static const std::string shaderPath = "../../src/shaders/";
+static const std::string shaderPath = "../src/shaders/";
 
 static int width = 640, height = 400;
 
@@ -32,26 +32,26 @@ int main ()
     glClearColor(0.15f, 0.25f, 0.65f, 1.0f);
     
     unsigned int shader = make_shader(
-        shaderPath +  "vertex.txt",
+        shaderPath + "vertex.txt",
         shaderPath + "fragment.txt"
     );
 
     TriangleMesh* triangle = new TriangleMesh();
-    Material* material = new Material("../../src/textures/image.png");
-    Material* mask = new Material("../../src/textures/mask.png");
+    Material* material = new Material("../src/textures/image.png");
+    Material* mask = new Material("../src/textures/mask.png");
 
     
     // set texture units
     glUseProgram(shader);
     glUniform1i(glGetUniformLocation(shader, "material"), 0);
     glUniform1i(glGetUniformLocation(shader, "mask"), 1);
-    
+
     unsigned int model_location = glGetUniformLocation(shader, "model");
     unsigned int view_location = glGetUniformLocation(shader, "view");
     unsigned int projection_location = glGetUniformLocation(shader, "projection");
 
     glm::vec3 quad_position = { 0.0f, 0.0f, 0.0f };
-    
+
     glm::mat4 projection = glm::perspective(90.0f, ((float)width)/((float)height), 0.1f, 10.0f);
     glUniformMatrix4fv(projection_location, 1, GL_FALSE, glm::value_ptr(projection));
 

@@ -1,4 +1,6 @@
 {
+    "cmake.sourceDirectory": "${workspaceFolder}/CMakeLists.txt",
+    "cmake.generator": "Unix Makefiles",
     "files.associations": {
         "*.embeddedhtml": "html",
         "fstream": "cpp",
@@ -77,6 +79,12 @@
         "ratio": "cpp",
         "sstream": "cpp",
         "stop_token": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "deque": "cpp",
+        "memory_resource": "cpp",
+        "numeric": "cpp",
+        "random": "cpp",
+        "semaphore": "cpp",
+        "cinttypes": "cpp"
     }
 }

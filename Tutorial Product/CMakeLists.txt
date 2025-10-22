@@ -20,4 +20,4 @@ add_executable(oglog_engine
 
 target_include_directories(oglog_engine PRIVATE dependencies)
 
-target_link_libraries(oglog_engine ${GLFW3_LIBRARY} OpenGL::GL)
+target_link_libraries(oglog_engine PRIVATE glfw OpenGL::GL)

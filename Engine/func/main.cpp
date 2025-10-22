@@ -2,9 +2,7 @@
 #include <string>
 #include <iostream>
 
-static const std::string shaderPath = "../../func/shaders/";
-static std::condition_variable cv;
-std::mutex mtx;
+static const std::string shaderPath = "../func/shaders/";
 
 
 
@@ -16,19 +14,20 @@ int main ()
         return -1;
     }
 
-    // glfwWindowHint(GLFW_VERSION_MAJOR, 4);
-    // glfwWindowHint(GLFW_VERSION_MINOR, 6);
-    // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    window = glfwCreateWindow(Resolution.x, Resolution.y, "OGLOG Engine project", NULL, NULL);
 
-    if (!window)
+    Engine::window = glfwCreateWindow(Resolution.x, Resolution.y, "OGLOG Engine project", NULL, NULL);
+
+    if (!Engine::window)
     {
         std::cerr << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         return -1;
     }
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(Engine::window);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -38,8 +37,5 @@ int main ()
     }
 
     Engine::startUp();
-
-    Engine::waitUntilQuit();
-
     return 0;
 }
