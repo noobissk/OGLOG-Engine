@@ -1,5 +1,5 @@
 #pragma once
-#include <logic/components/components.h>
+#include <config_component.h>
 
 class System {
 private:

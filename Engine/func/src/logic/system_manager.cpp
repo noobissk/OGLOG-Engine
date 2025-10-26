@@ -1,12 +1,13 @@
 #include <logic/system_manager.h>
 #include <logic/scene_manager.h>
-#include <logic/systems/systems.h>
+#include <config_system.h>
 #include <logic/components/transform_component.h>
 #include <logic/components/mesh_renderer_component.h>
+#include <iostream>
 
 
-std::vector<System> SystemManager::systems = {
-    Renderer_S()
+std::vector<System*> SystemManager::systems = {
+    new Renderer_S()
     // Transform_S()
 };
 
@@ -25,7 +26,7 @@ void SystemManager::update()
 {
     for (int i = 0; i < systems.size(); i++)
     {
-        systems[i].update();
+        systems[i]->update();
     }
     
 }
@@ -33,7 +34,9 @@ void SystemManager::update()
 
 void SystemManager::awake()
 {
-
+    for (System* sys : systems) {
+        sys->awake();
+    }
 }
 
 void SystemManager::start()

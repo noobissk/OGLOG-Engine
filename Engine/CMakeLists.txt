@@ -14,14 +14,13 @@ add_executable(oglog_engine
     func/src/engine.cpp
     func/src/logic/system_manager.cpp
     func/src/logic/scene_manager.cpp
-    func/config.cpp
     func/src/misc/colors.cpp
     func/src/logic/systems/render_system.cpp
     func/src/logic/systems/transform_system.cpp
     func/src/logic/systems/system.cpp
     func/src/util/mesh.cpp
     func/src/util/time.cpp
-
+    func/src/util/material.cpp
     )
 
 target_include_directories(oglog_engine PRIVATE dependencies)

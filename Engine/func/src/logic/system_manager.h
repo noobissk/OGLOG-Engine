@@ -5,7 +5,7 @@
 
 class SystemManager {
 public:
-    static std::vector<System> systems;
+    static std::vector<System*> systems;
 
     static Scene* current_scene;
 

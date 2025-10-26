@@ -44,7 +44,7 @@ TriangleMesh::TriangleMesh()
     glVertexAttribIPointer(1, 1, GL_INT, sizeof(unsigned int), (void*)0);
     glEnableVertexAttribArray(1);
 
-    // color as set up in the shader
+    // indices
     glGenBuffers(1, &EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementIndices.size() * sizeof(unsigned int), elementIndices.data(), GL_STATIC_DRAW);

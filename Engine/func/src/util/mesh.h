@@ -6,9 +6,12 @@
 struct Mesh {
 public:
     std::string file_path;
-    Mesh(std::string s);
-    ~Mesh();
     std::vector<float> positions;
     std::vector<unsigned int> elementIndices;
-    unsigned int vertex_count;
+    unsigned int index_count;
+    
+    unsigned int VBO, VAO, EBO;
+
+    Mesh(const std::string& s);
+    ~Mesh();
 };

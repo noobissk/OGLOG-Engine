@@ -1,11 +1,7 @@
+#include <config_render.h>
 #include <engine.h>
 #include <string>
 #include <iostream>
-
-static const std::string shaderPath = "../func/shaders/";
-
-
-
 
 int main ()
 {
@@ -19,11 +15,11 @@ int main ()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 
-    Engine::window = glfwCreateWindow(Resolution.x, Resolution.y, "OGLOG Engine project", NULL, NULL);
+    Engine::window = glfwCreateWindow(resolution.x, resolution.y, "OGLOG Engine project", NULL, NULL);
 
     if (!Engine::window)
     {
-        std::cerr << "Failed to create GLFW window" << std::endl;
+        std::cout << "[ERROR] Failed to create GLFW window" << std::endl;
         glfwTerminate();
         return -1;
     }
@@ -31,7 +27,7 @@ int main ()
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
-        std::cout << "Couln't load OpenGL" << std::endl;
+        std::cout << "[ERROR] Couln't load OpenGL" << std::endl;
         glfwTerminate();
         return -1;
     }
