@@ -6,8 +6,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
-#define STB_IMAGE_IMPLEMENTATION
-#include "../dependencies/stb_image.h"
+#include <service/asset_management_service.h>
 
 
 GLFWwindow* Engine::window = nullptr;
@@ -18,6 +17,7 @@ unsigned int Engine::shader;
 
 int Engine::startUp()
 {
+    
     shader = createShader(shader_module_path + "vertex.glsl", shader_module_path + "fragment.glsl");
     
 

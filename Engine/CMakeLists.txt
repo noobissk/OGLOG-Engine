@@ -9,23 +9,23 @@ find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 
 add_executable(oglog_engine
-    func/main.cpp
+    main.cpp
     dependencies/glad/glad.c
-    func/src/engine.cpp
-    func/src/logic/system_manager.cpp
-    func/src/logic/scene_manager.cpp
-    func/src/misc/colors.cpp
-    func/src/logic/systems/render_system.cpp
-    func/src/logic/systems/transform_system.cpp
-    func/src/logic/systems/system.cpp
-    func/src/util/mesh.cpp
-    func/src/util/time.cpp
-    func/src/util/material.cpp
+    src/engine.cpp
+    src/logic/system_manager.cpp
+    src/logic/scene_manager.cpp
+    src/misc/colors.cpp
+    src/logic/systems/render_system.cpp
+    src/logic/systems/transform_system.cpp
+    src/logic/systems/system.cpp
+    src/util/mesh.cpp
+    src/util/time.cpp
+    src/util/material.cpp
+    src/util/texture.cpp
     )
 
 target_include_directories(oglog_engine PRIVATE dependencies)
-target_include_directories(oglog_engine PRIVATE ${CMAKE_SOURCE_DIR}/func/src)
-target_include_directories(oglog_engine PRIVATE ${CMAKE_SOURCE_DIR}/func/incl)
+target_include_directories(oglog_engine PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(oglog_engine PRIVATE ${CMAKE_SOURCE_DIR}/asset)
 
 target_link_libraries(oglog_engine PRIVATE glfw OpenGL::GL)

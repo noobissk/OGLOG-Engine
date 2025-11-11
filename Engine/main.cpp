@@ -1,7 +1,9 @@
+#define STB_IMAGE_IMPLEMENTATION
 #include <config_render.h>
 #include <engine.h>
 #include <string>
 #include <iostream>
+#include <util/asset_manager.h>
 
 int main ()
 {
@@ -31,6 +33,9 @@ int main ()
         glfwTerminate();
         return -1;
     }
+
+    run_test_path_log();
+
 
     Engine::startUp();
     return 0;

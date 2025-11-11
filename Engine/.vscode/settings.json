@@ -85,6 +85,8 @@
         "numeric": "cpp",
         "random": "cpp",
         "semaphore": "cpp",
-        "cinttypes": "cpp"
-    }
+        "cinttypes": "cpp",
+        "codecvt": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }
