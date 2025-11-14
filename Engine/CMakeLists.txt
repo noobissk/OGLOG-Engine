@@ -22,6 +22,7 @@ add_executable(oglog_engine
     src/util/time.cpp
     src/util/material.cpp
     src/util/texture.cpp
+    src/service/asset_manager.cpp
     )
 
 target_include_directories(oglog_engine PRIVATE dependencies)

@@ -6,7 +6,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
-#include <service/asset_management_service.h>
+#include <service/asset_manager.h>
 
 
 GLFWwindow* Engine::window = nullptr;
@@ -17,7 +17,7 @@ unsigned int Engine::shader;
 
 int Engine::startUp()
 {
-    
+    AssetManager::start();
     shader = createShader(shader_module_path + "vertex.glsl", shader_module_path + "fragment.glsl");
     
 

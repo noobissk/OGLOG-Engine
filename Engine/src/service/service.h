@@ -3,5 +3,5 @@
 
 class Service{
 public:
-    void start();
-}
+    virtual void start();
+};

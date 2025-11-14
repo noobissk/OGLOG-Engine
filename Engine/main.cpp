@@ -34,9 +34,6 @@ int main ()
         return -1;
     }
 
-    run_test_path_log();
-
-
     Engine::startUp();
     return 0;
 }
