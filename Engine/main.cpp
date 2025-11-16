@@ -3,7 +3,6 @@
 #include <engine.h>
 #include <string>
 #include <iostream>
-#include <util/asset_manager.h>
 
 int main ()
 {
