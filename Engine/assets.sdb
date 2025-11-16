@@ -6,14 +6,6 @@ model\zaza.mtl -> 4
 model\demoness\textures\Pr_Ex_Subs_lambert5_BaseColor.tga.png -> 5
 model\demoness.zip -> 6
 model\zaza.obj -> 7
-shader\testing_02.txt -> 19
 shader\vertex.txt -> 8
-testing txt\bin\test_04.txt -> 9
-testing txt\bin\useless_file.cp -> 10
-testing txt\src\default\testing_03.txt -> 11
-testing txt\src\default\useless_file.cp -> 12
-testing txt\src\testing_02.txt -> 13
-testing txt\testing_01.txt -> 14
 texture\DirtMask.png -> 15
 texture\Gigi.png -> 16
-texture\texture_test.txt -> 17
