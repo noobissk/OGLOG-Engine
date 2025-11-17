@@ -8,6 +8,7 @@
 
 const fs::path AssetManager::assets_dir_rel_path = "../assets";
 const fs::path AssetManager::asset_db_rel_path = "../assets.sdb";
+std::unordered_map<uint16_t, fs::path> AssetManager::asset_map;
 
 
 std::vector<std::string> read_all_file_lines(fs::path path_to_file) {
@@ -24,6 +25,14 @@ std::vector<std::string> read_all_file_lines(fs::path path_to_file) {
         all_lines.push_back(myText);
     }
     return all_lines;
+}
+
+fs::path AssetManager::pathToAsset(Asset asset_id) {
+    return projectDirectory() / "assets"/ asset_map.at(asset_id);
+}
+
+fs::path AssetManager::projectDirectory() {
+    return fs::current_path().parent_path();
 }
 
 void AssetManager::start()
@@ -79,6 +88,7 @@ void AssetManager::start()
     for (const auto& pair : merged_map)
     {
         simple_database << pair.first << " -> " << pair.second << std::endl;
+        asset_map[pair.second] = pair.first;
     }
     simple_database.close();
 }

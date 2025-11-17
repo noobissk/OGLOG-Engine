@@ -1,8 +1,12 @@
 #version 460 core
 
-out vec4 screenCol;
+in vec2 fragTexCoords;
+
+uniform sampler2D ourTexture;
+
+out vec4 oFragColor;
 
 void main()
 {
-    screenCol = vec4(1.0, 1.0, 1.0, 1.0);
+    oFragColor = texture(ourTexture, fragTexCoords);
 }

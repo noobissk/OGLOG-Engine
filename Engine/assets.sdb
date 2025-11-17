@@ -1,11 +1,9 @@
-shader\fragment.txt -> 0
 model\demoness\source\Demonid.obj -> 1
+texture\DirtMask.png -> 15
 model\demoness\textures\Pr_Ex_Subs_lambert4_BaseColor.tga.png -> 2
 model\demoness\textures\Pr_Ex_Subs_Hairs.002_BaseColor.tga.png -> 3
 model\zaza.mtl -> 4
 model\demoness\textures\Pr_Ex_Subs_lambert5_BaseColor.tga.png -> 5
 model\demoness.zip -> 6
 model\zaza.obj -> 7
-shader\vertex.txt -> 8
-texture\DirtMask.png -> 15
 texture\Gigi.png -> 16

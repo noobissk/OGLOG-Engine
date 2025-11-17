@@ -6,10 +6,11 @@ Mesh::Mesh(const std::string& s)
 {
     file_path = s;
     positions = {
-        -1.0f,  1.0f,  0.0f,
-        -1.0f, -1.0f,  0.0f,
-         1.0f, -1.0f, -0.0f,
-         1.0f,  1.0f,  0.0f,
+        // positions            // texture coords
+        -1.0f,  1.0f,  0.0f,    0.0f, 1.0f, // top left
+        -1.0f, -1.0f,  0.0f,    0.0f, 0.0f, // bottom left
+         1.0f, -1.0f,  0.0f,    1.0f, 0.0f, // bottom right
+         1.0f,  1.0f,  0.0f,    1.0f, 1.0f, // top right
     };
     elementIndices = {
         0, 1, 2,
@@ -30,10 +31,11 @@ Mesh::Mesh(const std::string& s)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_count * sizeof(unsigned int), elementIndices.data(), GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    // glBindVertexArray(0);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)12);
+    glEnableVertexAttribArray(1);
 }
 
 

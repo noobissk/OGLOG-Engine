@@ -11,14 +11,16 @@
 
 GLFWwindow* Engine::window = nullptr;
 
-unsigned int Engine::shader;
+
+unsigned int current_shader = 0;
+
 
 
 
 int Engine::startUp()
 {
     AssetManager::start();
-    shader = createShader(shader_module_path + "vertex.glsl", shader_module_path + "fragment.glsl");
+    current_shader = createShader(shader_module_path + "vertex.glsl", shader_module_path + "fragment.glsl");
     
 
     SceneManager::createScene("default");
@@ -27,7 +29,7 @@ int Engine::startUp()
 
     screen_color = Colors::program_default;
     glClearColor(screen_color.r, screen_color.g, screen_color.b, 1.0f);
-    glUseProgram(shader);
+    glUseProgram(current_shader);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -56,7 +58,7 @@ unsigned int Engine::createModule(const std::string& filepath, unsigned int modu
     std::stringstream buffered_lines;
     std::string line;
 
-    std::cout << "[LOG] Reading file -> " << filepath << '\n';
+    std::cout << "[LOG] Reading shader -> " << filepath << '\n';
 
     file.open(filepath);
     while (std::getline(file, line)) {

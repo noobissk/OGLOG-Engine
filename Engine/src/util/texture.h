@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <filesystem>
 
 struct Texture {
 public:
@@ -9,6 +10,8 @@ public:
     int channels;
     unsigned char* data;
     unsigned int gpu_texture;
-    Texture(const char* filepath);
+    Texture(std::filesystem::path filepath);
     ~Texture();
+    // Ensure the image is uploaded to GPU (create texture) in the current GL context
+    void uploadIfNeeded();
 };

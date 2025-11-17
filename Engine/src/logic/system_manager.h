@@ -1,5 +1,5 @@
 #pragma once
-#include <logic/systems/system.h>
+#include <config_system.h>
 #include <logic/scene_manager.h>
 #include <vector>
 
