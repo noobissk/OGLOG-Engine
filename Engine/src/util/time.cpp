@@ -3,14 +3,14 @@
 #include <cmath>
 
 
-float Time::delta = 0.0f;
-float Time::fixed_delta = 0.0f;
-float Time::smooth_delta = 0.0f;
-float Time::sine = 0.0f;
-float Time::cosine = 0.0f;
-float Time::time = 0.0f;
-float Time::m_time_old = 0.0f;
-float Time::m_smooth_delta_factor = 0.1f;
+double Time::delta = 0.0f;
+double Time::fixed_delta = 0.0f;
+double Time::smooth_delta = 0.0f;
+double Time::sine = 0.0f;
+double Time::cosine = 0.0f;
+double Time::time = 0.0f;
+double Time::m_time_old = 0.0f;
+double Time::m_smooth_delta_factor = 0.1f;
 
 
 using namespace std::chrono;
@@ -31,7 +31,7 @@ void Time::update()
     cosine = std::cos(time);
 }
 
-void Time::updateFixed()
+void Time::fixedUpdate()
 {
     static auto _time_old = high_resolution_clock::now();
     auto _time = high_resolution_clock::now();

@@ -12,7 +12,7 @@
 GLFWwindow* Engine::window = nullptr;
 
 
-unsigned int current_shader = 0;
+Shader shader = Shader();
 
 
 
@@ -20,7 +20,7 @@ unsigned int current_shader = 0;
 int Engine::startUp()
 {
     AssetManager::start();
-    current_shader = createShader(shader_module_path + "vertex.glsl", shader_module_path + "fragment.glsl");
+    shader.ID = createShader(shader_module_path + "vertex.glsl", shader_module_path + "fragment.glsl");
     
 
     SceneManager::createScene("default");
@@ -29,7 +29,7 @@ int Engine::startUp()
 
     screen_color = Colors::program_default;
     glClearColor(screen_color.r, screen_color.g, screen_color.b, 1.0f);
-    glUseProgram(current_shader);
+    glUseProgram(shader.ID);
 
     while (!glfwWindowShouldClose(window))
     {

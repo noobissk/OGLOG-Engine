@@ -1,19 +1,19 @@
 #pragma once
+#include <config_system.h>
 
-
-class Time {
+class Time : public System {
 public:
-    static float delta;
-    static float smooth_delta;
-    static float fixed_delta;
-    static float sine;
-    static float cosine;
-    static float time;
+    static double delta;
+    static double smooth_delta;
+    static double fixed_delta;
+    static double sine;
+    static double cosine;
+    static double time;
 
 
-    void update();
-    void updateFixed();
+    void update() override;
+    void fixedUpdate() override;
 private:
-    static float m_time_old;
-    static float m_smooth_delta_factor;
+    static double m_time_old;
+    static double m_smooth_delta_factor;
 };

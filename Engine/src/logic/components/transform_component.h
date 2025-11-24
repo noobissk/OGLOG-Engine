@@ -3,23 +3,23 @@
 #include <logic/scene_manager.h>
 #include <glm/vec3.hpp>
 #include <glm/gtc/quaternion.hpp>
-// #include <glm/gtx/quaternion.hpp>
 #include <vector>
 
 struct Transform_C {
     glm::vec3 position;
-    glm::vec3 local_pos;
+    glm::vec3 rotation;
+    glm::vec3 scale;
 
-    glm::quat rotation;
-    glm::quat local_rotation;
+    glm::mat4 localMatrix;
+    glm::mat4 worldMatrix;
 
-    Entity parent = 0;                   // 0 = no parent
-    std::vector<Entity> children;
+    int16_t parent = -1;  // -1 = no parent
 
-    inline glm::vec3 euler_angles() {
-        return glm::eulerAngles(rotation);
-    }
-    inline glm::vec3 local_euler_angles() {
-        return glm::eulerAngles(local_rotation); 
-    }
+    // Don't query GL uniforms in the component constructor (unsafe if context/shader isn't ready).
+    Transform_C() : position(0.0f, 0.0f, 0.0f),
+                    rotation(0.0f, 0.0f, 0.0f),
+                    scale(1.0f, 1.0f, 1.0f),
+                    localMatrix(1.0f),
+                    worldMatrix(1.0f),
+                    parent(-1) {}
 };
