@@ -5,7 +5,12 @@
 #include <glm/gtc/quaternion.hpp>
 #include <vector>
 
+using Entity = uint64_t;
+
 struct Transform_C {
+    Entity self;  // Initialize first
+    Entity parent;  // self = no parent
+
     glm::vec3 position;
     glm::vec3 rotation;
     glm::vec3 scale;
@@ -13,13 +18,13 @@ struct Transform_C {
     glm::mat4 localMatrix;
     glm::mat4 worldMatrix;
 
-    int16_t parent = -1;  // -1 = no parent
-
     // Don't query GL uniforms in the component constructor (unsafe if context/shader isn't ready).
-    Transform_C() : position(0.0f, 0.0f, 0.0f),
+    // Initialize self first, then parent defaults to self (no parent).
+    Transform_C(Entity self_) : self(self_),
+                    parent(self_),
+                    position(0.0f, 0.0f, 0.0f),
                     rotation(0.0f, 0.0f, 0.0f),
                     scale(1.0f, 1.0f, 1.0f),
                     localMatrix(1.0f),
-                    worldMatrix(1.0f),
-                    parent(-1) {}
+                    worldMatrix(1.0f) {}
 };

@@ -20,20 +20,22 @@ void Transform_S::updateComponents(Entity e, Transform_C& transform_c) {
     t.localMatrix = computeLocalMatrix(t);
 
     // If no parent -> world = local
-    if (t.parent < 0) {
+    if (t.parent == t.self) {
         t.worldMatrix = t.localMatrix;
         return;
     }
 
     // Combine with parents
     glm::mat4 world = t.localMatrix;
-    int parent = t.parent;
+    Entity parent = t.parent;
 
-    while (parent >= 0) {
-        const Transform_C& p = SystemManager::current_scene->getComponent<Transform_C>(static_cast<Entity>(parent));
-        world = p.localMatrix * world;
-        parent = p.parent;
-    }
+    const Transform_C* p = nullptr;
+
+    do {
+        p = &SystemManager::current_scene->getComponent<Transform_C>(static_cast<Entity>(parent));
+        world = p->localMatrix * world;
+        parent = p->parent;
+    } while (parent != p->self);
 
     t.worldMatrix = world;
 }

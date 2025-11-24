@@ -22,42 +22,36 @@ void SystemManager::initialize()
 {
     unsigned int current_shader = shader.ID;
 
-    // load systems to memory
     e1 = current_scene->createEntity();
     e2 = current_scene->createEntity();
 
-    // current_scene->addComponent<Transform_C>(e, Transform_C{});
     current_scene->addComponent<MeshRenderer_C>(e1, MeshRenderer_C{""});
-    auto &transform1 = current_scene->addComponent<Transform_C>(e1, Transform_C{});
+    current_scene->addComponent<Transform_C>(e1, Transform_C{e1});
     
     current_scene->addComponent<MeshRenderer_C>(e2, MeshRenderer_C{""});
-    auto &transform2 = current_scene->addComponent<Transform_C>(e2, Transform_C{});
+    current_scene->addComponent<Transform_C>(e2, Transform_C{e2});
+
+    Transform_C& t2 = current_scene->getComponent<Transform_C>(e2);
     
-    transform2.position.y = 1.0f;
-    transform2.scale = glm::vec3(0.5f, 0.5f, 0.5f);
+    Transform_C& t1 = current_scene->getComponent<Transform_C>(e1);
+    
+    t2.parent = t1.self;
 }
 
 void SystemManager::update()
 {
-    // Update Time first so Time::time is current
     if (!systems.empty()) systems[0]->update();
     
-    Transform_C* transform1 = &current_scene->addComponent<Transform_C>(e1, Transform_C{});
-    Transform_C* transform2 = &current_scene->addComponent<Transform_C>(e2, Transform_C{});
+    Transform_C* transform1 = &current_scene->getComponent<Transform_C>(e1);
+    Transform_C* transform2 = &current_scene->getComponent<Transform_C>(e2);
 
-    transform1->position.x = sin(-Time::time * 2.0);
-    transform1->position.y = cos(-Time::time * 2.0);
+    transform2->position.x = sin(-Time::time * 2.0);
 
-    transform2->position.x = sin(Time::time * 4.0);
-    transform2->position.y = cos(Time::time * 4.0);
+    transform1->scale.x = (sin(Time::time) + 1.5) * 0.25f;
+    transform1->scale.y = (sin(Time::time) + 1.5) * 0.25f;
 
-    transform2->scale.x = (sin(Time::time) + 1.5) * 0.25f;
-    transform2->scale.y = (sin(Time::time) + 1.5) * 0.25f;
-    
-    transform2->rotation.z += Time::delta;
     transform1->rotation.z = static_cast<float>(-Time::time);
 
-    // Update remaining systems (Transform, Renderer, ...)
     for (int i = 1; i < static_cast<int>(systems.size()); ++i) {
         systems[i]->update();
     }
