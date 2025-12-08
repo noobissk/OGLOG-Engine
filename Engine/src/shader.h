@@ -1,21 +1,23 @@
 #pragma once
 #include <string>
-#include <config_render.h>
+#include <glm_math.h>
+
+
 
 class Shader {
 public:
-    unsigned int ID; // shader program ID
+    std::string name;
+    int vertex_asset;
+    int fragment_asset;
 
-    void use() const {
-        glUseProgram(ID);
-    }
+    int gl_id;
 
-    void setMat4(const std::string& name, const glm::mat4& mat) const {
-        // 1. get the uniform location
-        int location = glGetUniformLocation(ID, name.c_str());
+    Shader();
+    Shader(std::string _name, int _vertexAsset, int _fragmentAsset);
+    ~Shader();
+    static unsigned int createModule(const std::string& filepath, unsigned int module_type);
+    static unsigned int createShader(const std::string& vertex_module, const std::string& fragment_module);
 
-        // 2. send the matrix to GPU
-        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat));
-        // GL_FALSE because glm is column-major like OpenGL
-    }
+    void use() const;
+    void setMat4(const std::string& name, const glm::mat4& mat) const;
 };

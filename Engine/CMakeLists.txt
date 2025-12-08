@@ -16,7 +16,7 @@ add_executable(oglog_engine
     src/logic/system_manager.cpp
     src/logic/scene_manager.cpp
     src/misc/colors.cpp
-    src/logic/systems/render_system.cpp
+    src/logic/systems/sprite_renderer_system.cpp
     src/logic/systems/transform_system.cpp
     src/logic/systems/system.cpp
     src/util/mesh.cpp
@@ -24,6 +24,8 @@ add_executable(oglog_engine
     src/util/material.cpp
     src/util/texture.cpp
     src/service/asset_manager.cpp
+    src/service/shader_manager.cpp
+    src/shader.cpp
     )
 
 target_include_directories(oglog_engine PRIVATE dependencies)
@@ -31,3 +33,13 @@ target_include_directories(oglog_engine PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(oglog_engine PRIVATE ${CMAKE_SOURCE_DIR}/asset)
 
 target_link_libraries(oglog_engine PRIVATE glfw OpenGL::GL)
+
+add_executable(asset_tool
+    asset_tool.cpp
+    src/service/asset_manager.cpp
+    src/util/string_operations.h
+    )
+
+target_include_directories(asset_tool PRIVATE dependencies)
+target_include_directories(asset_tool PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(asset_tool PRIVATE ${CMAKE_SOURCE_DIR}/asset)

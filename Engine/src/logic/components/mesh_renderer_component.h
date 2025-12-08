@@ -12,5 +12,5 @@ public:
     std::shared_ptr<Mesh> mesh;
     Material material;
 
-    MeshRenderer_C(const std::string& s) : is_enabled(true), mesh(std::make_shared<Mesh>(s)), material(16) { }
+    MeshRenderer_C(const std::string& s, Asset texture) : is_enabled(true), mesh(std::make_shared<Mesh>(s)), material(texture) { }
 };

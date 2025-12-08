@@ -2,8 +2,7 @@
 #include <config_render.h>
 
 
-Material::Material(Asset texture_asset) : texture(AssetManager::pathToAsset(texture_asset)) {
-}
+Material::Material(Asset texture_asset) : texture(AssetManager::assetToPath(texture_asset)) { }
 
 void Material::use(int shader) {
     glUseProgram(shader);

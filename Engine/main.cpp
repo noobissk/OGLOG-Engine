@@ -32,7 +32,6 @@ int main ()
         glfwTerminate();
         return -1;
     }
-
     Engine::startUp();
     return 0;
 }

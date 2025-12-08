@@ -13,7 +13,8 @@ public:
     static void start();
     static std::vector<std::string> readFileFromId(Asset id);
     static fs::path projectDirectory();
-    static fs::path pathToAsset(Asset id);
+    static Asset pathToAsset(const fs::path& path);
+    static fs::path assetToPath(Asset id);
     static std::unordered_map<uint16_t, fs::path> asset_map;
     static const fs::path assets_dir_rel_path;
     static const fs::path asset_db_rel_path;

@@ -10,7 +10,7 @@
 std::vector<System*> SystemManager::systems = {
     new Time(),
     new Transform_S(),
-    new Renderer_S()
+    new SpriteRenderer_S("textures", 9, 4)
 };
 
 Scene* SystemManager::current_scene = nullptr;
@@ -20,21 +20,19 @@ Entity e2;
 
 void SystemManager::initialize()
 {
-    unsigned int current_shader = shader.ID;
-
     e1 = current_scene->createEntity();
     e2 = current_scene->createEntity();
 
-    current_scene->addComponent<MeshRenderer_C>(e1, MeshRenderer_C{""});
+    current_scene->addComponent<MeshRenderer_C>(e1, MeshRenderer_C("", 12));
     current_scene->addComponent<Transform_C>(e1, Transform_C{e1});
     
-    current_scene->addComponent<MeshRenderer_C>(e2, MeshRenderer_C{""});
+    current_scene->addComponent<MeshRenderer_C>(e2, MeshRenderer_C("", 14));
     current_scene->addComponent<Transform_C>(e2, Transform_C{e2});
 
     Transform_C& t2 = current_scene->getComponent<Transform_C>(e2);
     
     Transform_C& t1 = current_scene->getComponent<Transform_C>(e1);
-    
+
     t2.parent = t1.self;
 }
 

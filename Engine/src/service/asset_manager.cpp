@@ -6,8 +6,8 @@
 #include <fstream>
 #include <util/string_operations.h>
 
-const fs::path AssetManager::assets_dir_rel_path = "../assets";
-const fs::path AssetManager::asset_db_rel_path = "../assets.sdb";
+const fs::path AssetManager::assets_dir_rel_path = "../../assets";
+const fs::path AssetManager::asset_db_rel_path = "../../assets.sdb";
 std::unordered_map<uint16_t, fs::path> AssetManager::asset_map;
 
 
@@ -27,8 +27,18 @@ std::vector<std::string> read_all_file_lines(fs::path path_to_file) {
     return all_lines;
 }
 
-fs::path AssetManager::pathToAsset(Asset asset_id) {
-    return projectDirectory() / "assets"/ asset_map.at(asset_id);
+Asset AssetManager::pathToAsset(const fs::path& p)
+{
+    for (const auto& [id, mapped_path] : asset_map) {
+        if (mapped_path == p)
+            return id;
+    }
+    throw std::out_of_range("Asset path not found in asset_map");
+}
+fs::path AssetManager::assetToPath(Asset asset_id) {
+    if (asset_id == 0)
+        return fs::path();
+    return projectDirectory() / ".." / "assets"/ asset_map.at(asset_id);
 }
 
 fs::path AssetManager::projectDirectory() {
@@ -37,7 +47,17 @@ fs::path AssetManager::projectDirectory() {
 
 void AssetManager::start()
 {
+    std::cout << "[LOG] AssetManager::start() - Current working directory: " << fs::current_path() << std::endl;
+    std::cout << "[LOG] Looking for assets at: " << fs::absolute(assets_dir_rel_path) << std::endl;
+    std::cout << "[LOG] Database file path: " << fs::absolute(asset_db_rel_path) << std::endl;
+    
     std::vector<std::string> all_assets;
+    
+    // Check if assets directory exists
+    if (!fs::exists(assets_dir_rel_path)) {
+        std::cout << "[ERROR] Assets directory does not exist: " << fs::absolute(assets_dir_rel_path) << std::endl;
+        return;
+    }
     
     for (const auto& entry : fs::recursive_directory_iterator(assets_dir_rel_path)) {
         if (fs::is_regular_file(entry.path())) {
@@ -49,16 +69,17 @@ void AssetManager::start()
         }
     }
 
+    std::cout << "[LOG] Found " << all_assets.size() << " assets" << std::endl;
 
     std::vector<std::string> file_lines = read_all_file_lines(asset_db_rel_path);
     std::unordered_map<std::string, int> db_lines;
 
-    for (std::string& line : file_lines) {
+    for (std::string& line : file_lines) { // read existing database
         std::pair<std::string, std::string> pair = string_split(line, " -> ");
         db_lines.emplace(pair.first, std::stoi(pair.second));
     }
 
-    std::vector<uint16_t> existing_values;
+    std::vector<uint16_t> existing_values; // read paths in assets
     std::unordered_map<std::string, int> merged_map;
     for (const std::string path : all_assets) {
         auto it = db_lines.find(path);
@@ -71,11 +92,11 @@ void AssetManager::start()
     }
 
 
-    uint16_t nextUnique = 0;
-
+    
     for (auto& [key, value] : merged_map) {
+        uint16_t nextUnique = 1;
         if (value == -1) {
-            while (std::find(existing_values.begin(), existing_values.end(), nextUnique) != existing_values.end()) {
+            for (size_t i = 0; i < existing_values.size(); i++) {
                 ++nextUnique;
             }
             value = nextUnique;
@@ -84,6 +105,11 @@ void AssetManager::start()
     }
 
     std::ofstream simple_database(asset_db_rel_path);
+    
+    if (!simple_database.is_open()) {
+        std::cout << "[ERROR] Failed to open database file for writing: " << fs::absolute(asset_db_rel_path) << std::endl;
+        return;
+    }
 
     for (const auto& pair : merged_map)
     {
@@ -91,4 +117,5 @@ void AssetManager::start()
         asset_map[pair.second] = pair.first;
     }
     simple_database.close();
+    std::cout << "[LOG] Asset database written successfully to: " << fs::absolute(asset_db_rel_path) << std::endl;
 }

@@ -4,20 +4,25 @@
 
 Mesh::Mesh(const std::string& s)
 {
-    file_path = s;
-    positions = {
-        // positions            // texture coords
-        -0.5f,  0.5f,  0.0f,    1.0f, 0.0f, 
-        -0.5f, -0.5f,  0.0f,    1.0f, 1.0f,
-         0.5f, -0.5f,  0.0f,    0.0f, 1.0f,
-         0.5f,  0.5f,  0.0f,    0.0f, 0.0f,
-    };
-    elementIndices = {
-        0, 1, 2,
-        0, 2, 3
-    };
+    if (!s.empty()) {
+        // load from file
+    }
+    else {
+        file_path = s;
+        positions = {
+            // positions            // texture coords
+            -0.5f,  0.5f,  0.0f,    1.0f, 0.0f, 
+            -0.5f, -0.5f,  0.0f,    1.0f, 1.0f,
+             0.5f, -0.5f,  0.0f,    0.0f, 1.0f,
+             0.5f,  0.5f,  0.0f,    0.0f, 0.0f,
+        };
+        elementIndices = {
+            0, 1, 2,
+            0, 2, 3
+        };
+        index_count = elementIndices.size(); // renamed
+    }
 
-    index_count = elementIndices.size(); // renamed
 
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);

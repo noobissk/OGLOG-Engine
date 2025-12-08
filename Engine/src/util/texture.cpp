@@ -4,7 +4,6 @@
 
 Texture::Texture(std::filesystem::path filepath)
 {
-    // Only store filename and defer GPU upload until we have a valid context.
     file_name = filepath.string();
     width = 0; height = 0; channels = 0; data = nullptr; gpu_texture = 0;
 }
