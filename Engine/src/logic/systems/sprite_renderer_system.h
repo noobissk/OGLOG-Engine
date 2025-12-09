@@ -6,12 +6,8 @@
 
 class SpriteRenderer_S : public System {
 public:
-    std::string shader_name;
-    Asset vertex_asset;
-    Asset fragment_asset;
-    
     void update() override;
     void awake() override;
     void draw(Transform_C& t, MeshRenderer_C& c);
-    SpriteRenderer_S(std::string _shader_name, Asset _vertex, Asset _fragment);
+    SpriteRenderer_S();
 };

@@ -10,7 +10,7 @@ namespace fs = std::filesystem;
 
 class AssetManager {
 public:
-    static void start();
+    static void start(bool build_assets = false);
     static std::vector<std::string> readFileFromId(Asset id);
     static fs::path projectDirectory();
     static Asset pathToAsset(const fs::path& path);

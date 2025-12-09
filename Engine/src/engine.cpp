@@ -12,11 +12,16 @@
 GLFWwindow* Engine::window = nullptr;
 ShaderManager ShaderManager();
 
-
+void Engine::frameBufferSizeCallback(int width, int height)
+{
+    resolution = glm::ivec2(width, height);
+    glViewport(0, 0, width, height);
+}
 
 
 int Engine::startUp()
 {
+    std::cout << "[LOG] (Egnine) startup!" << std::endl;
     AssetManager::start();
 
 

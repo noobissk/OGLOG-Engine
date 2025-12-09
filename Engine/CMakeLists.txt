@@ -21,10 +21,12 @@ add_executable(oglog_engine
     src/logic/systems/system.cpp
     src/util/mesh.cpp
     src/util/time.cpp
-    src/util/material.cpp
     src/util/texture.cpp
     src/service/asset_manager.cpp
     src/service/shader_manager.cpp
+    src/materials/material.cpp
+    src/materials/material_font.cpp
+    src/materials/material_default.cpp
     src/shader.cpp
     )
 

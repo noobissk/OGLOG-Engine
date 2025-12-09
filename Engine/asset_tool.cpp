@@ -6,7 +6,7 @@ int main()
     std::cout << "=== Asset Tool ===" << std::endl;
     std::cout << "Scanning and updating assets.sdb..." << std::endl;
     
-    AssetManager::start();
+    AssetManager::start(true);
     
     std::cout << "Done! Assets database updated." << std::endl;
     

@@ -4,6 +4,11 @@
 #include <string>
 #include <iostream>
 
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    Engine::frameBufferSizeCallback(width, height);
+}
+
 int main ()
 {
     if (!glfwInit())
@@ -32,6 +37,9 @@ int main ()
         glfwTerminate();
         return -1;
     }
+
+    glfwSetFramebufferSizeCallback(Engine::window, framebuffer_size_callback);
+
     Engine::startUp();
     return 0;
 }
