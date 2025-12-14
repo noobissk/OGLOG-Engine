@@ -3,7 +3,6 @@
 #include <filesystem>
 
 struct Texture {
-public:
     std::string file_name;
     int height;
     int width;
@@ -12,6 +11,5 @@ public:
     unsigned int gpu_texture;
     Texture(std::filesystem::path filepath);
     ~Texture();
-    // Ensure the image is uploaded to GPU (create texture) in the current GL context
-    void uploadIfNeeded();
+    void uploadIfNeeded(int _desired_channels);
 };

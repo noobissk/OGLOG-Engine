@@ -5,7 +5,8 @@
 class MaterialFont : public Material {
 public:
     Texture texture;
-    MaterialFont(Shader* _shader, Asset sdf_atlas);
+    MaterialFont(Shader* _shader, Texture _texture);
+    MaterialFont(Shader* _shader, Asset _texture);
     void use() override;
     ~MaterialFont();
 };

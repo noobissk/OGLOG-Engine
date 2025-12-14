@@ -10,10 +10,10 @@ out vec4 FragColor;
 
 void main()
 {
-    float dist = texture(sdfAtlas, uv).r;
+    float dist = 1 - texture(sdfAtlas, uv).r;
 
-    // smoothstep for crisp edges
     float alpha = smoothstep(0.5 - smoothing, 0.5 + smoothing, dist);
 
-    FragColor = vec4(textColor.rgb, textColor.a * alpha);
+    FragColor = vec4(textColor.rgb, alpha);
 }
+

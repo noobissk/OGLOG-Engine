@@ -21,43 +21,47 @@ Entity e3;
 
 void SystemManager::initialize()
 {
-    ShaderManager::load("sprite", 9, 4);
-    ShaderManager::load("font", 11, 10);
-    e1 = current_scene->createEntity();
-    e2 = current_scene->createEntity();
-    // e3 = current_scene->createEntity();
+    ShaderManager::load("sprite", 11, 7);
+    ShaderManager::load("font", 10, 4);
+    // e1 = current_scene->createEntity();
+    // e2 = current_scene->createEntity();
+    e3 = current_scene->createEntity();
 
-    current_scene->addComponent<MeshRenderer_C>(e1, MeshRenderer_C("", std::make_shared<MaterialDefault>(ShaderManager::get("sprite"), 12)));
-    current_scene->addComponent<Transform_C>(e1, Transform_C(e1));
+    // current_scene->addComponent<MeshRenderer_C>(e1, MeshRenderer_C(std::make_shared<MaterialDefault>(ShaderManager::get("sprite"), 17)));
+    // current_scene->addComponent<Transform_C>(e1, Transform_C(e1));
 
-    auto& meshR = current_scene->addComponent<MeshRenderer_C>(e2, MeshRenderer_C("", std::make_shared<MaterialDefault>(ShaderManager::get("sprite"), 14)));
-    current_scene->addComponent<Transform_C>(e2, Transform_C(e2));
+    // current_scene->addComponent<MeshRenderer_C>(e2, MeshRenderer_C(std::make_shared<MaterialDefault>(ShaderManager::get("sprite"), 13)));
+    // current_scene->addComponent<Transform_C>(e2, Transform_C(e2));
+    
+    auto* c = &current_scene->addComponent<MeshRenderer_C>(e3, MeshRenderer_C(std::make_shared<MaterialFont>(ShaderManager::get("font"), 21)));
+    current_scene->addComponent<Transform_C>(e3, Transform_C(e3));
+    auto* text_c = &current_scene->addComponent<Text_C>(e3, Text_C(c, std::make_shared<Font>(14, &std::dynamic_pointer_cast<MaterialFont>(c->material)->texture) ));
 
-    // current_scene->addComponent<MeshRenderer_C>(e3, MeshRenderer_C("", MaterialFont(ShaderManager::get("font").gl_id, 17)));
-    // current_scene->addComponent<Transform_C>(e3, Transform_C{e3});
+    text_c->text = "Hello world";
+
+
 
     Transform_C& t2 = current_scene->getComponent<Transform_C>(e2);
     
     Transform_C& t1 = current_scene->getComponent<Transform_C>(e1);
 
     t2.parent = t1.self;
-
-    auto mat = std::dynamic_pointer_cast<MaterialDefault>(meshR.material);
 }
 
 void SystemManager::update()
 {
     if (!systems.empty()) systems[0]->update();
     
-    Transform_C* transform1 = &current_scene->getComponent<Transform_C>(e1);
-    Transform_C* transform2 = &current_scene->getComponent<Transform_C>(e2);
+    // Transform_C* transform1 = &current_scene->getComponent<Transform_C>(e1);
+    // Transform_C* transform2 = &current_scene->getComponent<Transform_C>(e2);
 
-    transform2->position.x = sin(-Time::time * 2.0);
+    // transform2->position.x = sin(-Time::time * 2.0);
+    // transform2->position.z = cos(-Time::time * 2.0);
 
-    transform1->scale.x = (sin(Time::time) + 1.5) * 0.25f;
-    transform1->scale.y = (sin(Time::time) + 1.5) * 0.25f;
+    // transform1->scale.x = (sin(Time::time) + 1.5) * 0.25f;
+    // transform1->scale.y = (sin(Time::time) + 1.5) * 0.25f;
 
-    transform1->rotation.z = static_cast<float>(-Time::time);
+    // transform1->rotation.z = static_cast<float>(-Time::time);
 
     for (int i = 1; i < static_cast<int>(systems.size()); ++i) {
         systems[i]->update();

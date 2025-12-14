@@ -8,6 +8,6 @@ class SpriteRenderer_S : public System {
 public:
     void update() override;
     void awake() override;
-    void draw(Transform_C& t, MeshRenderer_C& c);
+    void draw(Entity e, Transform_C& t, MeshRenderer_C& c);
     SpriteRenderer_S();
 };

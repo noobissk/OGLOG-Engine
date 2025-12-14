@@ -86,42 +86,50 @@ void AssetManager::start(bool build_assets)
 
         std::cout << "[LOG] Found " << all_assets.size() << " assets" << std::endl;
 
-        std::vector<uint16_t> existing_values; // read paths in assets
-        std::unordered_map<std::string, int> merged_map;
-        for (const std::string path : all_assets) {
+        std::unordered_set<uint16_t> used_ids;
+        for (auto& [path, id] : db_lines) {
+            used_ids.insert(id);
+        }
+
+        // Merge DB with file system
+        std::unordered_map<std::string, uint16_t> merged;
+
+        // Assign IDs
+        for (const std::string& path : all_assets) {
+
             auto it = db_lines.find(path);
-            int value = -1;
+
             if (it != db_lines.end()) {
-                value = it->second;
-                existing_values.push_back(value);
+                // existing file → keep same ID
+                merged[path] = it->second;
+                used_ids.insert(it->second);
             }
-            merged_map.emplace(path, value);
-        }
+            else {
+                // New asset → assign first free ID
+                uint16_t new_id = 1;
+                while (used_ids.count(new_id))
+                    ++new_id;
 
-        for (auto& [key, value] : merged_map) {
-            uint16_t nextUnique = 1;
-            if (value == -1) {
-                for (size_t i = 0; i < existing_values.size(); i++) {
-                    ++nextUnique;
-                }
-                value = nextUnique;
-                existing_values.push_back(nextUnique);
+                merged[path] = new_id;
+                used_ids.insert(new_id);
             }
         }
 
-        std::ofstream simple_database(asset_db_rel_path);
-        
-        if (!simple_database.is_open()) {
-            std::cout << "[ERROR] Failed to open database file for writing: " << fs::absolute(asset_db_rel_path) << std::endl;
-            return;
+        // mapt -> vector for sorting
+        std::ofstream out(asset_db_rel_path);
+        std::vector<std::pair<std::string, uint16_t>> sorted_entries(
+            merged.begin(), merged.end()
+        );
+
+        // Sort
+        std::sort(sorted_entries.begin(), sorted_entries.end(), [](auto& a, auto& b) {
+            return a.first < b.first;
+        });
+
+        for (auto& [path, id] : sorted_entries) {
+            out << path << " -> " << id << "\n";
+            asset_map[id] = path;
         }
 
-        for (const auto& pair : merged_map)
-        {
-            simple_database << pair.first << " -> " << pair.second << std::endl;
-            asset_map[pair.second] = pair.first;
-        }
-        simple_database.close();
-        std::cout << "[LOG] Asset database written successfully to: " << fs::absolute(asset_db_rel_path) << std::endl;
     }
 }

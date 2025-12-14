@@ -16,19 +16,20 @@ add_executable(oglog_engine
     src/logic/system_manager.cpp
     src/logic/scene_manager.cpp
     src/misc/colors.cpp
-    src/logic/systems/sprite_renderer_system.cpp
+    src/logic/systems/renderer_system.cpp
     src/logic/systems/transform_system.cpp
     src/logic/systems/system.cpp
     src/util/mesh.cpp
     src/util/time.cpp
     src/util/texture.cpp
+    src/util/Font.cpp
     src/service/asset_manager.cpp
     src/service/shader_manager.cpp
     src/materials/material.cpp
     src/materials/material_font.cpp
     src/materials/material_default.cpp
     src/shader.cpp
-    )
+)
 
 target_include_directories(oglog_engine PRIVATE dependencies)
 target_include_directories(oglog_engine PRIVATE ${CMAKE_SOURCE_DIR}/src)
