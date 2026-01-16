@@ -2,9 +2,9 @@
 
 in vec2 uv;
 
-uniform sampler2D sdfAtlas;      // your SDF atlas texture
-uniform vec4 textColor;          // RGBA color of the text
-uniform float smoothing;         // recommended: 0.08–0.18 depending on resolution
+uniform sampler2D sdfAtlas;
+uniform vec4 textColor;
+uniform float smoothing;
 
 out vec4 FragColor;
 

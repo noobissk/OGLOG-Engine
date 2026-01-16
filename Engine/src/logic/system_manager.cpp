@@ -18,6 +18,7 @@ Scene* SystemManager::current_scene = nullptr;
 Entity e1;
 Entity e2;
 Entity e3;
+Entity e4;
 
 void SystemManager::initialize()
 {
@@ -26,6 +27,7 @@ void SystemManager::initialize()
     // e1 = current_scene->createEntity();
     // e2 = current_scene->createEntity();
     e3 = current_scene->createEntity();
+    e4 = current_scene->createEntity();
 
     // current_scene->addComponent<MeshRenderer_C>(e1, MeshRenderer_C(std::make_shared<MaterialDefault>(ShaderManager::get("sprite"), 17)));
     // current_scene->addComponent<Transform_C>(e1, Transform_C(e1));
@@ -33,26 +35,29 @@ void SystemManager::initialize()
     // current_scene->addComponent<MeshRenderer_C>(e2, MeshRenderer_C(std::make_shared<MaterialDefault>(ShaderManager::get("sprite"), 13)));
     // current_scene->addComponent<Transform_C>(e2, Transform_C(e2));
     
-    auto* c = &current_scene->addComponent<MeshRenderer_C>(e3, MeshRenderer_C(std::make_shared<MaterialFont>(ShaderManager::get("font"), 21)));
+    auto* c = &current_scene->addComponent<MeshRenderer_C>(e3, MeshRenderer_C(std::make_shared<MaterialFont>(ShaderManager::get("font"), 18)));
     current_scene->addComponent<Transform_C>(e3, Transform_C(e3));
-    auto* text_c = &current_scene->addComponent<Text_C>(e3, Text_C(c, std::make_shared<Font>(14, &std::dynamic_pointer_cast<MaterialFont>(c->material)->texture) ));
+    auto* text_c = &current_scene->addComponent<Text_C>(e3, Text_C(c, std::make_shared<Font>(15, &std::dynamic_pointer_cast<MaterialFont>(c->material)->texture) ));
 
-    text_c->text = "Hello world";
+    Transform_C& t = current_scene->getComponent<Transform_C>(e3);
+    t.position.x = - 1;
 
+    // auto* c1 = &current_scene->addComponent<MeshRenderer_C>(e4, MeshRenderer_C(std::make_shared<MaterialFont>(ShaderManager::get("font"), 18)));
+    // current_scene->addComponent<Transform_C>(e4, Transform_C(e4));
+    // auto* text_c1 = &current_scene->addComponent<Text_C>(e4, Text_C(c1, std::make_shared<Font>(15, &std::dynamic_pointer_cast<MaterialFont>(c1->material)->texture) ));
 
-
-    Transform_C& t2 = current_scene->getComponent<Transform_C>(e2);
+    // text_c1->text = "Dobry den, gazda Juraj! test";
     
-    Transform_C& t1 = current_scene->getComponent<Transform_C>(e1);
-
-    t2.parent = t1.self;
+    // Transform_C& t1 = current_scene->getComponent<Transform_C>(e4);
+    // t1.position.x = - 0.8;
+    // t1.position.y = - 0.3;
 }
 
 void SystemManager::update()
 {
     if (!systems.empty()) systems[0]->update();
     
-    // Transform_C* transform1 = &current_scene->getComponent<Transform_C>(e1);
+    // Transform_C* transform1 = &current_scene->getComponent<Transform_C>(e3);
     // Transform_C* transform2 = &current_scene->getComponent<Transform_C>(e2);
 
     // transform2->position.x = sin(-Time::time * 2.0);
@@ -62,7 +67,11 @@ void SystemManager::update()
     // transform1->scale.y = (sin(Time::time) + 1.5) * 0.25f;
 
     // transform1->rotation.z = static_cast<float>(-Time::time);
-
+    Text_C& t = current_scene->getComponent<Text_C>(e3);
+    std::string txt = "Good day mister Juraj. Ť";
+    std::string result = txt.substr(0, std::round(((Time::sine + 1) * 0.5f) * txt.length()));
+    t.text = result;
+  
     for (int i = 1; i < static_cast<int>(systems.size()); ++i) {
         systems[i]->update();
     }

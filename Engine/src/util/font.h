@@ -6,6 +6,26 @@
 #include "service/asset_manager.h"
 
 
+
+struct glyphRecord {
+    uint32_t unicode;
+    uint32_t glyph_id;
+
+    float advance;
+    float bearingX;
+    float bearingY;
+    float width;
+    float height;
+    glyphRecord() : unicode(), glyph_id() {}
+    glyphRecord(unsigned int _unicode, unsigned int _glyph_id) : unicode(_unicode), glyph_id(_glyph_id) {}
+};
+struct FontData {
+    uint32_t font_res;
+    float unitsPerEm;
+    float ascender;
+    float descender;
+    std::vector<glyphRecord> glyphs;
+};
 struct GlyphUV {
     float u0, v0;
     float u1, v1;
@@ -18,15 +38,11 @@ struct glyphMapping {
     glyphMapping(unsigned int _unicode, unsigned int _glyph_id) : unicode(_unicode), glyph_id(_glyph_id) {}
 };
 
-struct LoadedGlyphMappings {
-    uint32_t font_res;
-    std::vector<glyphMapping> mappings;
-};
-
 class Font {
     std::unordered_map<char, int> atlas_data;
-    LoadedGlyphMappings loadFileGlyphMappings(const std::string& path);
+    FontData loadFileGlyphMappings(const std::string& path);
 public:
+    FontData font_data;
     int resolution_per_glyph;
     Texture* atlas;
     Font(Asset _atlas_data, Texture* _atlas);

@@ -66,7 +66,6 @@ void SpriteRenderer_S::draw(Entity e, Transform_C& t, MeshRenderer_C& c)
         if (text_c->checkDirty())
             text_c->rebuildMesh();
 
-
         mat->shader->setMat4("model", t.worldMatrix);
         mat->shader->setMat4("view", view);
 

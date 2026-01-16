@@ -25,43 +25,64 @@ public:
         return text != text_old;
     }
 
-    void rebuildMesh() {
+    void rebuildMesh()
+    {
         text_old = text;
-        
+
         std::vector<float> vertices;
         std::vector<unsigned int> indices;
-        
-        auto mat = std::dynamic_pointer_cast<MaterialFont>(mesh_renderer->material);
-        int numCollumn = mat->texture.width / font->resolution_per_glyph;
-        
-        float mesh_offset = -((float) text.length()) / 2.0f / 8.0f;
-        float mesh_offset_increase = 1.0f / 8.0f;
-        
-        for (int i = 0; i < text.length(); i++) {
-            mesh_offset += mesh_offset_increase;
-            int id = font->charToGlyphID(text[i]);
-            std::cout << id << std::endl;
-            auto uv = font->glyphIDToUV(id);
-            vertices.insert(vertices.end(), {
-                // positions                                  // texture coords
-                -0.125f + mesh_offset,  0.125f,  0.0f,    uv.u0, uv.v0,
-                -0.125f + mesh_offset, -0.125f,  0.0f,    uv.u0, uv.v1,
-                 0.125f + mesh_offset, -0.125f,  0.0f,    uv.u1, uv.v1,
-                 0.125f + mesh_offset,  0.125f,  0.0f,    uv.u1, uv.v0
-            });
-        
-            unsigned int base = i * 4;
 
-            indices.push_back(base + 0);
-            indices.push_back(base + 1);
-            indices.push_back(base + 2);
-            indices.push_back(base + 0);
-            indices.push_back(base + 2);
-            indices.push_back(base + 3);
+        float penX = 0.0f;
+        float penY = 0.0f;
+
+        float scale = font->font_data.font_res / font->font_data.unitsPerEm * 0.05f;
+        int id = 0;
+
+        float baselineY = 0.0f;
+
+        for (int i = 0; i < text.length(); i++)
+        {
+            if (text[i] != ' ')
+            {
+                int glyphID = font->charToGlyphID(text[i]);
+                const glyphRecord& g = font->font_data.glyphs[glyphID];
+                GlyphUV uv = font->glyphIDToUV(glyphID);
+
+                float centerY = 0.0f;
+                float cell = 150.0f * scale;
+
+                float x0 = penX;
+                float x1 = x0 + cell;
+
+                float y0 = centerY - cell * 0.5f;
+                float y1 = centerY + cell * 0.5f;
+
+                unsigned int base = id * 4;
+
+                vertices.insert(vertices.end(), {
+                    x0, y1, 0.0f, uv.u0, uv.v0,
+                    x0, y0, 0.0f, uv.u0, uv.v1,
+                    x1, y0, 0.0f, uv.u1, uv.v1,
+                    x1, y1, 0.0f, uv.u1, uv.v0
+                });
+
+                indices.insert(indices.end(), {
+                    base + 0, base + 1, base + 2,
+                    base + 0, base + 2, base + 3
+                });
+
+                penX += g.advance * scale;
+                id++;
+            }
+            else
+            {
+                penX += 50.0f * scale;
+            }
         }
 
+        mesh_renderer->material->shader->setFloat("smoothing", 0.02f);
         mesh_renderer->mesh->updateMesh(vertices, indices);
-        int location = glGetUniformLocation(mesh_renderer->material->shader->gl_id, "smoothing");
-        glUniform1f(location, smoothness);
     }
+
+
 };

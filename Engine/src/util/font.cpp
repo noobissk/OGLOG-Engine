@@ -1,56 +1,88 @@
 #include "font.h"
 #include <fstream>
 #include <utf8.h>
+#include <vector>
 
 Font::Font(Asset _atlas_data, Texture* _atlas) : atlas(_atlas) {
-    LoadedGlyphMappings mappings = loadFileGlyphMappings(AssetManager::assetToPath(_atlas_data).string());
-    resolution_per_glyph = mappings.font_res;
-    for (size_t i = 0; i < mappings.mappings.size(); i++) {
-        atlas_data.emplace(mappings.mappings[i].unicode, mappings.mappings[i].glyph_id);
+    font_data = loadFileGlyphMappings(AssetManager::assetToPath(_atlas_data).string());
+    resolution_per_glyph = font_data.font_res;
+    for (size_t i = 0; i < font_data.glyphs.size(); i++) {
+        atlas_data.emplace(font_data.glyphs[i].unicode, font_data.glyphs[i].glyph_id);
     }
 }
 
 
 
 int Font::charToGlyphID(char c) {
-    return atlas_data[c];
+    auto c_unicode = static_cast<unsigned int>(static_cast<unsigned char>(c));
+    auto it = atlas_data.find(c_unicode);
+    if (it == atlas_data.end()) {
+        return -1;
+    }
+    return it->second;
 }
 
 
-struct sdfm_header {
-    uint32_t magic;        // to identify file type
-    uint32_t version;      // for future compatibility
-    uint32_t font_res;     // font resolution
-    uint32_t glyph_count;  // number of mappings
+
+struct sdfm_glyph {
+    uint32_t unicode;
+    uint32_t glyph_id;
+
+    float advance;
+    float bearingX;
+    float bearingY;
+    float width;
+    float height;
 };
-LoadedGlyphMappings Font::loadFileGlyphMappings(const std::string& path)
-{
+struct sdfm_header {
+    uint32_t magic;
+    uint32_t version;
+    uint32_t font_res;
+    uint32_t glyph_count;
+    float unitsPerEm;
+    float ascender;
+    float descender;
+};
+FontData Font::loadFileGlyphMappings(const std::string& path) {
     std::ifstream in(path, std::ios::binary);
     if (!in) {
-        throw std::runtime_error("Failed to open file for reading: " + path);
+        throw std::runtime_error("Failed to open file: " + path);
     }
 
     sdfm_header header{};
     in.read(reinterpret_cast<char*>(&header), sizeof(header));
-
+    
     if (header.magic != 0x4D464453) {
-        throw std::runtime_error("Invalid glyph mapping file");
+        throw std::runtime_error("Invalid SDF font file");
     }
-
     if (header.version != 1) {
-        throw std::runtime_error("Unsupported glyph mapping version");
+        throw std::runtime_error("Unsupported SDF font version");
+    }
+    
+    FontData font{};
+    font.font_res   = header.font_res;
+    font.unitsPerEm = header.unitsPerEm;
+    font.ascender   = header.ascender;
+    font.descender  = header.descender;
+
+    font.glyphs.resize(header.glyph_count);
+
+
+    for (uint32_t i = 0; i < header.glyph_count; i++) {
+        sdfm_glyph bin{};
+        in.read(reinterpret_cast<char*>(&bin), sizeof(bin));
+
+        glyphRecord& g = font.glyphs[i];
+        g.unicode  = bin.unicode;
+        g.glyph_id = bin.glyph_id;
+        g.advance  = bin.advance;
+        g.bearingX = bin.bearingX;
+        g.bearingY = bin.bearingY;
+        g.width    = bin.width;
+        g.height   = bin.height;
     }
 
-    LoadedGlyphMappings result;
-    result.font_res = header.font_res;
-    result.mappings.resize(header.glyph_count);
-
-    for (auto& m : result.mappings) {
-        in.read(reinterpret_cast<char*>(&m.unicode), sizeof(m.unicode));
-        in.read(reinterpret_cast<char*>(&m.glyph_id), sizeof(m.glyph_id));
-    }
-
-    return result;
+    return font;
 }
 
 

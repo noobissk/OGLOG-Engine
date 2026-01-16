@@ -3,8 +3,20 @@
 #include <config_render.h>
 
 
-MaterialFont::MaterialFont(Shader* _shader, Asset texture_asset) : Material(_shader), texture(AssetManager::assetToPath(texture_asset)) { texture.uploadIfNeeded(STBI_grey); }
-MaterialFont::MaterialFont(Shader* _shader, Texture _texture) : Material(_shader), texture(std::move(_texture)) { texture.uploadIfNeeded(STBI_grey); }
+MaterialFont::MaterialFont(Shader* _shader, Asset texture_asset) : Material(_shader), texture(AssetManager::assetToPath(texture_asset)) { 
+    if (!glfwGetCurrentContext()) {
+        std::cerr << "[FATAL] uploadIfNeeded called with NO OpenGL context\n";
+        return;
+    }
+    texture.uploadIfNeeded(STBI_grey);
+}
+MaterialFont::MaterialFont(Shader* _shader, Texture _texture) : Material(_shader), texture(std::move(_texture)) { 
+    if (!glfwGetCurrentContext()) {
+        std::cerr << "[FATAL] uploadIfNeeded called with NO OpenGL context\n";
+        return;
+    }
+    texture.uploadIfNeeded(STBI_grey);
+}
 
 
 void MaterialFont::use() {
