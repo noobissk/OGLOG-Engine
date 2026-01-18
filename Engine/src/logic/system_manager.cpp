@@ -22,6 +22,11 @@ Entity e4;
 
 void SystemManager::initialize()
 {
+    GLint maxTextureSize = 0;
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
+
+    std::cout << "Max texture size: " << maxTextureSize << " x "
+              << maxTextureSize << std::endl;
     ShaderManager::load("sprite", 11, 7);
     ShaderManager::load("font", 10, 4);
     // e1 = current_scene->createEntity();
@@ -42,9 +47,9 @@ void SystemManager::initialize()
     Transform_C& t = current_scene->getComponent<Transform_C>(e3);
     t.position.x = - 1;
 
-    // auto* c1 = &current_scene->addComponent<MeshRenderer_C>(e4, MeshRenderer_C(std::make_shared<MaterialFont>(ShaderManager::get("font"), 18)));
+    // auto* c1 = &current_scene->addComponent<MeshRenderer_C>(e4, MeshRenderer_C(std::make_shared<MaterialFont>(ShaderManager::get("font"), 21)));
     // current_scene->addComponent<Transform_C>(e4, Transform_C(e4));
-    // auto* text_c1 = &current_scene->addComponent<Text_C>(e4, Text_C(c1, std::make_shared<Font>(15, &std::dynamic_pointer_cast<MaterialFont>(c1->material)->texture) ));
+    // auto* text_c1 = &current_scene->addComponent<Text_C>(e4, Text_C(c1, std::make_shared<Font>(14, &std::dynamic_pointer_cast<MaterialFont>(c1->material)->texture) ));
 
     // text_c1->text = "Dobry den, gazda Juraj! test";
     
