@@ -1,12 +1,14 @@
 #pragma once
 #include "material.h"
 #include <util/texture.h>
+#include <util/font.h>
 
 class MaterialFont : public Material {
 public:
-    Texture texture;
-    MaterialFont(Shader* _shader, Texture _texture);
-    MaterialFont(Shader* _shader, Asset _texture);
+    std::shared_ptr<Font> font;
+    MaterialFont(Shader* _shader, std::shared_ptr<Font> _font);
+    MaterialFont(Shader* _shader, Asset _font_data, const std::vector<Asset>& _atlas_assets);
     void use() override;
+    void useForGlyph(uint8_t atlasIndex);
     ~MaterialFont();
 };

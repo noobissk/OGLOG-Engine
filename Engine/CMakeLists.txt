@@ -15,6 +15,7 @@ add_executable(oglog_engine
     src/engine.cpp
     src/logic/system_manager.cpp
     src/logic/scene_manager.cpp
+    src/logic/components/text_component.cpp
     src/misc/colors.cpp
     src/logic/systems/renderer_system.cpp
     src/logic/systems/transform_system.cpp

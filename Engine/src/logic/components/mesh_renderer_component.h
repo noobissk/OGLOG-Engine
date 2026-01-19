@@ -30,6 +30,11 @@ public:
                     0, 2, 3
                 };
                 mesh = std::make_shared<Mesh>(positions, element_indices);
+            } else if (std::dynamic_pointer_cast<MaterialFont>(material)) {
+                // For text rendering, create an empty mesh that will be populated by Text_C
+                std::vector<float> empty_positions;
+                std::vector<unsigned int> empty_indices;
+                mesh = std::make_shared<Mesh>(empty_positions, empty_indices);
             } else {
                 mesh = std::make_shared<Mesh>(_mesh_path);
             }

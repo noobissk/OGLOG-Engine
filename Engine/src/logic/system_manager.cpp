@@ -40,22 +40,56 @@ void SystemManager::initialize()
     // current_scene->addComponent<MeshRenderer_C>(e2, MeshRenderer_C(std::make_shared<MaterialDefault>(ShaderManager::get("sprite"), 13)));
     // current_scene->addComponent<Transform_C>(e2, Transform_C(e2));
     
-    auto* c = &current_scene->addComponent<MeshRenderer_C>(e3, MeshRenderer_C(std::make_shared<MaterialFont>(ShaderManager::get("font"), 18)));
-    current_scene->addComponent<Transform_C>(e3, Transform_C(e3));
-    auto* text_c = &current_scene->addComponent<Text_C>(e3, Text_C(c, std::make_shared<Font>(15, &std::dynamic_pointer_cast<MaterialFont>(c->material)->texture) ));
-
-    Transform_C& t = current_scene->getComponent<Transform_C>(e3);
-    t.position.x = - 1;
-
-    // auto* c1 = &current_scene->addComponent<MeshRenderer_C>(e4, MeshRenderer_C(std::make_shared<MaterialFont>(ShaderManager::get("font"), 21)));
-    // current_scene->addComponent<Transform_C>(e4, Transform_C(e4));
-    // auto* text_c1 = &current_scene->addComponent<Text_C>(e4, Text_C(c1, std::make_shared<Font>(14, &std::dynamic_pointer_cast<MaterialFont>(c1->material)->texture) ));
-
-    // text_c1->text = "Dobry den, gazda Juraj! test";
+    auto* c1 = &current_scene->addComponent<MeshRenderer_C>(e3, MeshRenderer_C(std::make_shared<MaterialFont>(ShaderManager::get("font"), 39, std::vector<Asset>{27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38})));
     
-    // Transform_C& t1 = current_scene->getComponent<Transform_C>(e4);
-    // t1.position.x = - 0.8;
-    // t1.position.y = - 0.3;
+    current_scene->addComponent<Transform_C>(e3, Transform_C(e3));
+    
+    auto mat_font1 = std::dynamic_pointer_cast<MaterialFont>(c1->material);
+    if (!mat_font1) {
+        std::cout << "[ERROR] Failed to cast material to MaterialFont\n";
+        return;
+    }
+    
+    if (!mat_font1->font) {
+        std::cout << "[ERROR] MaterialFont has no font loaded\n";
+        return;
+    }
+    auto* c2 = &current_scene->addComponent<MeshRenderer_C>(e4, MeshRenderer_C(std::make_shared<MaterialFont>(ShaderManager::get("font"), 20, std::vector<Asset>{14, 15, 18, 19})));
+    
+    current_scene->addComponent<Transform_C>(e4, Transform_C(e4));
+    
+    auto mat_font2 = std::dynamic_pointer_cast<MaterialFont>(c2->material);
+    if (!mat_font2) {
+        std::cout << "[ERROR] Failed to cast material to MaterialFont\n";
+        return;
+    }
+    
+    if (!mat_font2->font) {
+        std::cout << "[ERROR] MaterialFont has no font loaded\n";
+        return;
+    }
+    
+    current_scene->addComponent<Text_C>(e3, Text_C(e3, mat_font1->font));
+    
+    current_scene->addComponent<Text_C>(e4, Text_C(e4, mat_font2->font));
+
+    // Set alignment and rebuild mesh
+    Text_C& text_c1 = current_scene->getComponent<Text_C>(e3);
+    text_c1.alignment = TextAlign::CENTER;
+    text_c1.v_alignment = VerticalAlign::CENTER;
+    
+    Text_C& text_c2 = current_scene->getComponent<Text_C>(e4);
+    text_c2.alignment = TextAlign::RIGHT;
+    text_c2.v_alignment = VerticalAlign::CENTER;
+
+    Transform_C& t1 = current_scene->getComponent<Transform_C>(e3);
+    // t1.position.x = -0.5f;
+
+    Transform_C& t2 = current_scene->getComponent<Transform_C>(e4);
+    // t2.position.x = -0.5f;
+    t2.position.y = -0.3f;
+    
+    std::cout << "[LOG] SystemManager::initialize() complete!" << std::endl;
 }
 
 void SystemManager::update()
@@ -72,10 +106,15 @@ void SystemManager::update()
     // transform1->scale.y = (sin(Time::time) + 1.5) * 0.25f;
 
     // transform1->rotation.z = static_cast<float>(-Time::time);
-    Text_C& t = current_scene->getComponent<Text_C>(e3);
-    std::string txt = "Good day mister Juraj. Ť";
-    std::string result = txt.substr(0, std::round(((Time::sine + 1) * 0.5f) * txt.length()));
-    t.text = result;
+    Text_C& t1 = current_scene->getComponent<Text_C>(e3);
+    std::string txt1 = "Good day mister Juraj.";
+    std::string result1 = txt1.substr(0, std::round(((Time::sine + 1) * 0.5f) * txt1.length()));
+    t1.text = result1;
+
+    Text_C& t2 = current_scene->getComponent<Text_C>(e4);
+    std::string txt2 = "Good day to you\nmister Mazda.";
+    std::string result2 = txt2.substr(0, std::round(((Time::cosine + 1) * 0.5f) * txt2.length()));
+    t2.text = result2;
   
     for (int i = 1; i < static_cast<int>(systems.size()); ++i) {
         systems[i]->update();

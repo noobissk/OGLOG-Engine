@@ -1,0 +1,10 @@
+^C:\USERS\MISOH\DOCUMENTS\PROJECTS\SCHOOL\MATURITA\FONTGEN\BUILD\CMAKEFILES\139BB895975163C9239D0746CD9AC0C9\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/misoh/Documents/Projects/School/Maturita/FontGen -BC:/Users/misoh/Documents/Projects/School/Maturita/FontGen/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/misoh/Documents/Projects/School/Maturita/FontGen/build/oglog_fontgen.slnx
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

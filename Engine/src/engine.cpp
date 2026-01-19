@@ -24,30 +24,47 @@ int Engine::startUp()
     std::cout << "[LOG] (Egnine) startup!" << std::endl;
     AssetManager::start();
 
+    try {
+        std::cout << "[LOG] Creating default scene..." << std::endl;
+        SceneManager::createScene("default");
+        
+        std::cout << "[LOG] Initializing systems..." << std::endl;
+        SystemManager::initialize();
+        
+        std::cout << "[LOG] Awakening systems..." << std::endl;
+        SystemManager::awake();
 
-    SceneManager::createScene("default");
-    SystemManager::initialize();
-    SystemManager::awake();
+        screen_color = Colors::program_default;
+        glClearColor(screen_color.r, screen_color.g, screen_color.b, 1.0f);
 
-    screen_color = Colors::program_default;
-    glClearColor(screen_color.r, screen_color.g, screen_color.b, 1.0f);
+        std::cout << "[LOG] Starting main loop..." << std::endl;
+        while (!glfwWindowShouldClose(window))
+        {
+            glfwPollEvents();
 
-    while (!glfwWindowShouldClose(window))
-    {
-        glfwPollEvents();
+            glClear(GL_COLOR_BUFFER_BIT);
 
-        glClear(GL_COLOR_BUFFER_BIT);
+            SystemManager::update();
 
-        SystemManager::update();
+            glfwSwapBuffers(window);
+        }
 
-        glfwSwapBuffers(window);
+        glfwTerminate();
+
+        Engine::quit();
+
+        return 0;
     }
-
-    glfwTerminate();
-
-    Engine::quit();
-
-    return 0;
+    catch (const std::exception& e) {
+        std::cerr << "[FATAL] Exception caught in main loop: " << e.what() << std::endl;
+        glfwTerminate();
+        return -1;
+    }
+    catch (...) {
+        std::cerr << "[FATAL] Unknown exception caught in main loop" << std::endl;
+        glfwTerminate();
+        return -1;
+    }
 }
 
 void Engine::quit() { }
