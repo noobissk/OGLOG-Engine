@@ -40,9 +40,9 @@ public:
     float character_spacing;
     float line_spacing;
     
-    Text_C() : text(""), text_old(""), entity(0), font(nullptr), text_size(24), smoothness(0.0025f/24), alignment(TextAlign::LEFT), alignment_old(TextAlign::LEFT), v_alignment(VerticalAlign::TOP), v_alignment_old(VerticalAlign::TOP), character_spacing(50.0f), line_spacing(0.5f) {}
-    Text_C(Entity _entity, std::shared_ptr<Font> _font) : text(""), text_old(""), entity(_entity), font(_font), text_size(24), smoothness(0.0025f/24), alignment(TextAlign::LEFT), alignment_old(TextAlign::LEFT), v_alignment(VerticalAlign::TOP), v_alignment_old(VerticalAlign::TOP), character_spacing(50.0f), line_spacing(0.5f) {}
-    Text_C(Entity _entity, std::shared_ptr<Font> _font, const std::string& _text) : text(_text), text_old(_text), entity(_entity), font(_font), text_size(24), smoothness(0.0025f/24), alignment(TextAlign::LEFT), alignment_old(TextAlign::LEFT), v_alignment(VerticalAlign::TOP), v_alignment_old(VerticalAlign::TOP), character_spacing(50.0f), line_spacing(1.5f) { if (!text.empty()) rebuildMesh(); }
+    Text_C() : text(""), text_old(""), entity(0), font(nullptr), text_size(100), smoothness(0.0025f/24), alignment(TextAlign::LEFT), alignment_old(TextAlign::LEFT), v_alignment(VerticalAlign::TOP), v_alignment_old(VerticalAlign::TOP), character_spacing(50.0f), line_spacing(0.5f) {}
+    Text_C(Entity _entity, std::shared_ptr<Font> _font) : text(""), text_old(""), entity(_entity), font(_font), text_size(100), smoothness(0.0025f/24), alignment(TextAlign::LEFT), alignment_old(TextAlign::LEFT), v_alignment(VerticalAlign::TOP), v_alignment_old(VerticalAlign::TOP), character_spacing(50.0f), line_spacing(0.5f) {}
+    Text_C(Entity _entity, std::shared_ptr<Font> _font, const std::string& _text) : text(_text), text_old(_text), entity(_entity), font(_font), text_size(100), smoothness(0.0025f/24), alignment(TextAlign::LEFT), alignment_old(TextAlign::LEFT), v_alignment(VerticalAlign::TOP), v_alignment_old(VerticalAlign::TOP), character_spacing(50.0f), line_spacing(1.5f) { if (!text.empty()) rebuildMesh(); }
 
     bool checkDirty() {
         return text != text_old || alignment != alignment_old || v_alignment != v_alignment_old;

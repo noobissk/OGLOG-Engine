@@ -11,10 +11,6 @@
 class Engine
 {
 public:
-
-    static GLFWwindow* window;
-
-
     static int startUp();
     static void quit();
     static void frameBufferSizeCallback(int width, int height);

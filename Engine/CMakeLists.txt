@@ -20,6 +20,7 @@ add_executable(oglog_engine
     src/logic/systems/renderer_system.cpp
     src/logic/systems/transform_system.cpp
     src/logic/systems/system.cpp
+    src/logic/systems/canvas_system.cpp
     src/util/mesh.cpp
     src/util/time.cpp
     src/util/texture.cpp

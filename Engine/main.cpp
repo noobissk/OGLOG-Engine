@@ -21,15 +21,15 @@ int main ()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 
-    Engine::window = glfwCreateWindow(resolution.x, resolution.y, "OGLOG Engine project", NULL, NULL);
+    window = glfwCreateWindow(resolution.x, resolution.y, "OGLOG Engine project", NULL, NULL);
 
-    if (!Engine::window)
+    if (!window)
     {
         std::cout << "[ERROR] Failed to create GLFW window" << std::endl;
         glfwTerminate();
         return -1;
     }
-    glfwMakeContextCurrent(Engine::window);
+    glfwMakeContextCurrent(window);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -38,7 +38,7 @@ int main ()
         return -1;
     }
 
-    glfwSetFramebufferSizeCallback(Engine::window, framebuffer_size_callback);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     Engine::startUp();
     return 0;

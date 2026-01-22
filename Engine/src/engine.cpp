@@ -9,7 +9,7 @@
 #include <service/asset_manager.h>
 
 
-GLFWwindow* Engine::window = nullptr;
+GLFWwindow* window = nullptr;
 ShaderManager ShaderManager();
 
 void Engine::frameBufferSizeCallback(int width, int height)
