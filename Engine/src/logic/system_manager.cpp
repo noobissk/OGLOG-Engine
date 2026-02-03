@@ -20,6 +20,7 @@ Entity e1;
 Entity e2;
 Entity e3;
 Entity e4;
+Entity e5;
 
 void allingmentCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_TAB && action == GLFW_PRESS) {
@@ -43,11 +44,22 @@ void SystemManager::initialize()
     e2 = current_scene->createEntity();
     e3 = current_scene->createEntity();
     e4 = current_scene->createEntity();
+    e5 = current_scene->createEntity();
+    
+    // current_scene->addComponent<MeshRenderer_C>(e5, MeshRenderer_C(std::make_shared<MaterialDefault>(ShaderManager::get("sprite"), 40)));
+    // auto* ui_02 = &current_scene->addComponent<UIElement_C>(e5, UIElement_C(glm::vec2(960.0f, 540.0f), glm::vec2(2080.0f, 1080.0f)));
+    // ui_02->canvas = e2;
+    // current_scene->addComponent<Transform_C>(e5, Transform_C(e5));
 
-    current_scene->addComponent<MeshRenderer_C>(e1, MeshRenderer_C(std::make_shared<MaterialDefault>(ShaderManager::get("sprite"), 17)));
-    auto* ui_05 = &current_scene->addComponent<UIElement_C>(e1, UIElement_C(glm::vec2(50.0f, 50.0f), glm::vec2(100.0f, 100.0f)));
-    ui_05->canvas = e2;
+    current_scene->addComponent<MeshRenderer_C>(e1, MeshRenderer_C(std::make_shared<MaterialDefault>(ShaderManager::get("sprite"), 41)));
+    auto* ui_01 = &current_scene->addComponent<UIElement_C>(e1, UIElement_C(glm::vec2(960.0f, 540.0f), glm::vec2(400.0f, 150.0f)));
+    ui_01->canvas = e2;
+    auto* btn_01 = &current_scene->addComponent<Button_C>(e1, Button_C());
+    btn_01->on_click = []() {
+        std::cout << "[LOG] Button clicked!" << std::endl;
+    };
     current_scene->addComponent<Transform_C>(e1, Transform_C(e1));
+
 
     // current_scene->addComponent<MeshRenderer_C>(e2, MeshRenderer_C(std::make_shared<MaterialDefault>(ShaderManager::get("sprite"), 13)));
     // current_scene->addComponent<Transform_C>(e2, Transform_C(e2))

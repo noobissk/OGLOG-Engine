@@ -11,6 +11,7 @@
 
 GLFWwindow* window = nullptr;
 ShaderManager ShaderManager();
+glm::ivec2 resolution(1920, 1080);
 
 void Engine::frameBufferSizeCallback(int width, int height)
 {

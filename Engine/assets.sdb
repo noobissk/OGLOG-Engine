@@ -30,10 +30,10 @@ model\demoness\textures\Pr_Ex_Subs_lambert5_BaseColor.tga.png -> 6
 model\zaza.mtl -> 5
 model\zaza.obj -> 9
 shader\font\fragment.glsl -> 4
-shader\font\fragment_debug.glsl -> 21
 shader\font\vertex.glsl -> 10
 shader\sprite\fragment.glsl -> 7
 shader\sprite\vertex.glsl -> 11
-texture\DirtMask.png -> 12
 texture\Gigi.png -> 13
+texture\btn-01.png -> 21
+texture\btn-02.png -> 41
 texture\spid.png -> 17

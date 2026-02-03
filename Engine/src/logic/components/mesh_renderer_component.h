@@ -17,19 +17,7 @@ public:
         material = std::move(_material);
         if (_mesh_path.empty()) {
             if (auto mat = std::dynamic_pointer_cast<MaterialDefault>(material)) {
-                float aspect_position = static_cast<float>(mat->texture.width) / static_cast<float>(mat->texture.height) * 0.5f;
-                std::vector<float> positions = {
-                    // positions            // texture coords
-                    -aspect_position,  0.5f,  0.0f,    1.0f, 0.0f,
-                    -aspect_position, -0.5f,  0.0f,    1.0f, 1.0f,
-                     aspect_position, -0.5f,  0.0f,    0.0f, 1.0f,
-                     aspect_position,  0.5f,  0.0f,    0.0f, 0.0f,
-                };
-                std::vector<unsigned int> element_indices = {
-                    0, 1, 2,
-                    0, 2, 3
-                };
-                mesh = std::make_shared<Mesh>(positions, element_indices);
+                mesh = std::make_shared<Mesh>("");
             } else if (std::dynamic_pointer_cast<MaterialFont>(material)) {
                 // For text rendering, create an empty mesh that will be populated by Text_C
                 std::vector<float> empty_positions;

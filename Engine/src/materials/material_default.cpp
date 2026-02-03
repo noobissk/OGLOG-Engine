@@ -3,8 +3,12 @@
 #include <iostream>
 
 
-MaterialDefault::MaterialDefault(Shader* _shader, Asset texture_asset) : Material(_shader), texture(AssetManager::assetToPath(texture_asset)) { texture.uploadIfNeeded(4); }
-MaterialDefault::MaterialDefault(Shader* _shader, Texture _texture) : Material(_shader), texture(std::move(_texture)) { texture.uploadIfNeeded(4); }
+MaterialDefault::MaterialDefault(Shader* _shader, Asset texture_asset) : Material(_shader), texture(AssetManager::assetToPath(texture_asset)) {
+    texture.uploadIfNeeded(4);
+}
+MaterialDefault::MaterialDefault(Shader* _shader, Texture _texture) : Material(_shader), texture(std::move(_texture)) {
+    texture.uploadIfNeeded(4);
+}
 
 void MaterialDefault::use() {
     glUseProgram(shader->gl_id);

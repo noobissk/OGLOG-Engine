@@ -4,3 +4,4 @@
 #include <logic/components/text_component.h>
 #include <logic/components/canvas_component.h>
 #include <logic/components/ui_element.h>
+#include <logic/components/button_component.h>

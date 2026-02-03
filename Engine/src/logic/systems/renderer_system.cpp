@@ -4,9 +4,26 @@
 #include <engine_variables.h>
 #include "materials/material_default.h"
 
+float aspect() {
+    return static_cast<float>(resolution.x) / static_cast<float>(resolution.y);
+}
+
+glm::mat4 view = glm::mat4(1.0f);
+glm::mat4 projection = glm::ortho(
+    -aspect(), aspect(),            // left / right
+    -1.0f, 1.0f,                    // bottom / top
+    -1.0f, 1.0f                     // near / fa
+);
+
 void SpriteRenderer_S::update() {
     if (!SystemManager::current_scene) return;
-    int i = 0;
+
+    projection = glm::ortho(
+        -aspect(), aspect(),
+        -1.0f, 1.0f,
+        -1.0f, 1.0f
+    );
+
     SystemManager::current_scene->forEach<Transform_C, MeshRenderer_C>(
     [this](Entity e, Transform_C& transform_c, MeshRenderer_C& mesh_c) {
         draw(e, transform_c, mesh_c);
@@ -15,17 +32,8 @@ void SpriteRenderer_S::update() {
 
 SpriteRenderer_S::SpriteRenderer_S() { }
 
-float aspect() {
-    return static_cast<float>(resolution.x) / static_cast<float>(resolution.y);
-}
 
 
-glm::mat4 view = glm::mat4(1.0f);
-glm::mat4 projection = glm::ortho(
-    -aspect(), aspect(),            // left / right
-    -1.0f, 1.0f,                    // bottom / top
-    -1.0f, 1.0f                     // near / fa
-);
 
 void SpriteRenderer_S::awake() {
     glEnable(GL_BLEND);
@@ -38,8 +46,8 @@ void SpriteRenderer_S::draw(Entity e, Transform_C& t, MeshRenderer_C& c)
         std::cout << "[WARN] draw: mesh pointer null\n";
         return;
     }
-    if (c.material->shader->vertex_asset == 0) {
-        std::cout << "[WARN] draw: material is null\n";
+    if (!c.material || !c.material->shader) {
+        std::cout << "[WARN] draw: material or shader is null\n";
         return;
     }
 
@@ -47,6 +55,7 @@ void SpriteRenderer_S::draw(Entity e, Transform_C& t, MeshRenderer_C& c)
     if (auto mat = std::dynamic_pointer_cast<MaterialDefault>(c.material)) {
         mat->shader->use();
 
+        mat->shader->setVec4("overrideColor", mat->color);
         mat->shader->setMat4("model", t.worldMatrix);
         mat->shader->setMat4("view", view);
         mat->shader->setMat4("projection", projection);

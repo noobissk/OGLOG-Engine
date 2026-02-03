@@ -25,11 +25,11 @@ void Mesh::sendMeshToGPU() {
 
 void Mesh::generateDefaultMesh() {
     positions = {
-        // positions            // texture coords
-        -0.5f,  0.5f,  0.0f,    1.0f, 0.0f,
-        -0.5f, -0.5f,  0.0f,    1.0f, 1.0f,
-         0.5f, -0.5f,  0.0f,    0.0f, 1.0f,
-         0.5f,  0.5f,  0.0f,    0.0f, 0.0f,
+        // positions          // texture coords
+        -0.5f,  0.5f, 0.0f,   0.0f, 0.0f, // top-left
+        -0.5f, -0.5f, 0.0f,   0.0f, 1.0f, // bottom-left
+         0.5f, -0.5f, 0.0f,   1.0f, 1.0f, // bottom-right
+         0.5f,  0.5f, 0.0f,   1.0f, 0.0f  // top-right
     };
     element_indices = {
         0, 1, 2,

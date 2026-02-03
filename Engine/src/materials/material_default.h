@@ -14,6 +14,7 @@ public:
 
     MaterialDefault(Shader* _shader, Asset texture_asset);
     MaterialDefault(Shader* _shader, Texture _texture);
+    glm::vec4 color = glm::vec4(1.0f);
     // void applyTexture(int texture);
     void use() override;
     ~MaterialDefault();

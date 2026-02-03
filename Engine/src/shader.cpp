@@ -90,10 +90,22 @@ void Shader::use() const {
 }
 
 void Shader::setMat4(const std::string& name, const glm::mat4& mat) const {
+    use();
     int location = glGetUniformLocation(gl_id, name.c_str());
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat));
 }
+void Shader::setVec4(const std::string& name, const glm::vec4& vec) const {
+    use();
+    int location = glGetUniformLocation(gl_id, name.c_str());
+    glUniform4f(location, vec.x, vec.y, vec.z, vec.w);
+}
+void Shader::setVec3(const std::string& name, const glm::vec3& vec) const {
+    use();
+    int location = glGetUniformLocation(gl_id, name.c_str());
+    glUniform3f(location, vec.x, vec.y, vec.z);
+}
 void Shader::setFloat(const std::string& name, float val) const {
+    use();
     int location = glGetUniformLocation(gl_id, name.c_str());
     glUniform1f(location, val);
 }
